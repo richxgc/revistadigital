@@ -1,0 +1,40 @@
+#modal-file-upload > .modal-dialog{
+	width: 90%;
+}
+#title-dnd{
+	text-align: center;
+}
+#file-upload-icon{
+	margin-top: 20px;
+	font-size: 80px;
+}
+#drop-files-zone{
+	transition: all 0.5 ease;
+	display: block;
+	width: 100%;
+	min-height: 400px;
+	border: 2px dashed #CCC;
+	border-radius: 10px;
+}
+#advertising-dnd{
+	display: block;
+	width: 100%;
+	text-align: center;
+	color: #CCC;
+}
+#list-files-zone{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#list-files-zone > li{
+	margin: 10px 1%;
+	width: 23%;
+	height: 150px;
+}
+#list-files-zone > li > img{
+	display: block;
+	width: 90%;
+	height: 140px;
+	margin: auto;
+}

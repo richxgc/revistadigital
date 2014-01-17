@@ -30,11 +30,20 @@
 #list-files-zone > li{
 	margin: 10px 1%;
 	width: 23%;
-	height: 150px;
+	height: 180px;
 }
 #list-files-zone > li > img{
 	display: block;
 	width: 90%;
 	height: 140px;
-	margin: auto;
+	margin: 5px auto;
+}
+#list-files-zone > li > div.progress{
+	margin: 0;
+}
+#list-files-zone > li > span{
+	margin: 0;
+	text-align: center;
+	width: 100%;
+	display: block;
 }

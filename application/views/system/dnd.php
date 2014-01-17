@@ -28,8 +28,7 @@
 				
 			</section>
 			<footer class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Subir</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</footer>
 		</div>
 	</div>

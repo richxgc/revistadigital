@@ -2,64 +2,66 @@
 
 class Filesystem extends CI_Controller {
 
-	public function index()
-	{
-				
+	public function index(){
+		redirect();
 	}
 
 	public function upload(){
-		//read contents from the input stream
-		$inputHandler = fopen('php://input','r');
-		//create a temp file where to save data from the input stream
-		$fileHandler = fopen('./uploads/image.tmp', 'w+');
-		//save data from the input stream
-		while(true){
-			$buffer = fgets($inputHandler,4096);
-			if(strlen($buffer) == 0){
-				fclose($inputHandler);
-				fclose($fileHandler);
-				return true;
+		//create response object
+		$response = new stdClass();
+		//read de request data
+		$request = $_REQUEST;
+		$file = $_REQUEST['file'];
+		$file_data = $this->get_file_data($_REQUEST['name']);
+		$name = $file_data[0];
+		$extension = '.'.$file_data[1];
+		//create temp file to store base64 string
+		if(file_exists('./uploads/'.$name.$extension)){
+			$i=0;
+			while(file_exists('./uploads/'.$name.'-'.$i.$extension)) $i++;
+			$input64 = fopen('./uploads/'.$name.'-'.$i.$extension.'.tmp','wb');
+			fwrite($input64, $file);
+			$this->base64_to_file(file_get_contents('./uploads/'.$name.'-'.$i.$extension.'.tmp'),'./uploads/'.$name.'-'.$i.$extension);
+			//unlink('./uploads/'.$name.'-'.$i.$extension.'.tmp'); //descomentar en el servidor de producción
+			if(file_exists('./uploads/'.$name.'-'.$i.$extension)){
+				$response->succeed = TRUE;
+				$response->name = $name.'-'.$i.$extension;
+			} else{
+				$response->succeed = FALSE;
+				$response->status = "No se ha podido subir el archivo ".$name.$extension;
 			}
-			fwrite($fileHandler, $buffer);
-			$this->base64_to_jpeg(file_get_contents('./uploads/image.tmp'),'./uploads/image.jpg');
+		} else{
+			$input64 = fopen('./uploads/'.$name.$extension.'.tmp','wb');
+			fwrite($input64, $file);
+			$this->base64_to_file(file_get_contents('./uploads/'.$name.$extension.'.tmp'),'./uploads/'.$name.$extension);
+			//unlink('./uploads/'.$name.$extension.'.tmp'); //descomentar en el servidor de producción
+			if(file_exists('./uploads/'.$name.$extension)){
+				$response->succeed = TRUE;
+				$response->name = $name.$extension;
+			} else{
+				$response->succeed = FALSE;
+				$response->status = $response->status = "No se ha podido subir el archivo ".$name.$extension;
+			}
 		}
+		//send response to client
+		$this->output->set_content_type('application/json')->set_output(json_encode($response));
+		return;
 	}
 
-	function base64_to_jpeg($base64_string, $output_file) {
-    $ifp = fopen($output_file, "wb"); 
+	private function get_file_data($file_name){
+		$data = explode('.',$file_name);
+		return $data;
+	}
 
-    $data = explode(',', $base64_string);
-
-    fwrite($ifp, base64_decode($data[1])); 
-    fclose($ifp); 
-
-    return $output_file; 
+	private function base64_to_file($base64_string, $output_file){
+		$output_stream = fopen($output_file,'wb');
+		$data = explode(',',$base64_string);
+		fwrite($output_stream, base64_decode($data[1]));
+		fclose($output_stream);
+		return $output_file;
 	}
 
 }
-	/*public function upload(){
-		// read contents from the input stream
-$inputHandler = fopen('php://input', "r");
-// create a temp file where to save data from the input stream
-$fileHandler = fopen('/tmp/myfile.tmp', "w+");
- 
-// save data from the input stream
-while(true) {
-    $buffer = fgets($inputHandler, 4096);
-    if (strlen($buffer) == 0) {
-        fclose($inputHandler);
-        fclose($fileHandler);
-        return true;
-    }
- 
-    fwrite($fileHandler, $buffer);
-}
- 
-// done
-- See more at: http://www.webiny.com/blog/2012/05/07/webiny-file-upload-with-html5-and-ajax-using-php-streams/#sthash.FX3Ji3zW.dpuf
-	}
-
-}*/
 
 /* End of file filesystem.php */
 /* Location: ./application/controllers/filesystem.php */

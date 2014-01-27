@@ -13,28 +13,6 @@ class Admin extends CI_Controller {
 		$this->response = new stdClass();
 	}
 
-	public function dnd(){
-		$this->load->model('admin_model');
-		$this->admin_model->adm_id = $this->user_session;
-		$data['menu'] = $this->admin_model->get_menu_by_user();
-		$data['active'] = 'home';
-		$data['title'] = 'Panel de administración';
-		$data['user'] = $this->user_name;
-		//css
-		$data['styles'] = array(
-			base_url('stylesheets').'/dnd-files.css',
-		);
-		//scripts que se cargaran en la vista
-		$data['scripts'] = array(
-			base_url('scripts').'/system/dnd_files.js',
-		);
-		//load views
-		$this->load->view('system/common/header',$data);
-		$this->load->view('system/common/navbar');
-		$this->load->view('system/dnd');
-		$this->load->view('system/common/footer');
-	}
-
 	public function index(){
 		if($this->user_session == FALSE){
 			redirect('/admin/login');
@@ -68,6 +46,7 @@ class Admin extends CI_Controller {
 			$data['active'] = 'articles';
 			$data['title'] = 'Publicación de artículos';
 			$data['user'] = $this->user_name;
+			$data['status'] = $status;
 			$this->load->model('article_model');
 			$data['articles'] = $this->article_model->get_articles_at($limit,$offset,$status);
 			//cargar vistas de pagina principal de categorias
@@ -105,6 +84,7 @@ class Admin extends CI_Controller {
 			//stilos que se cargaran en la vista
 			$data['styles'] = array(
 				base_url('stylesheets').'/system/wysihtml5.css',
+				base_url('stylesheets').'/system/filesystem.css',
 			);
 			//scripts que se cargaran en la vista
 			$data['scripts'] = array(
@@ -114,11 +94,13 @@ class Admin extends CI_Controller {
 				base_url('scripts').'/system/articles/create_article.js',
 				base_url('scripts').'/system/articles/authors.js',
 				base_url('scripts').'/system/articles/categories.js',
+				base_url('scripts').'/system/articles/filesystem.js',
 			);
 			//cargar vistas de pagina principal de categorias
 			$this->load->view('system/common/header',$data);
 			$this->load->view('system/common/navbar');
 			$this->load->view('system/articles/create');
+			$this->load->view('system/articles/filesystem');
 			$this->load->view('system/common/footer');
 			return;
 		} else{
@@ -153,6 +135,56 @@ class Admin extends CI_Controller {
 		}
 		$this->load->model('user_model');
 		$this->response = $this->user_model->search_authors($this->input->post('search'));
+		$this->output->set_content_type('application/json')->set_output(json_encode($this->response));
+		return;
+	}
+
+	public function create_article(){
+		//verifica si la solicitud se produce mediante xhr, de no ser asi redirige al usuario al inicio
+		if($this->input->is_ajax_request() == FALSE){
+			redirect('/admin');
+			return;
+		}
+		//verifica si existe una sesion activa para guardar la informacion en la base de datos
+		if($this->user_session == FALSE){
+			$this->response->succeed = FALSE;
+			$this->response->code = 401; //no autorizado
+			$this->response->status = 'La sesión ha expirado';
+			$this->output->set_content_type('application/json')->set_output(json_encode($this->response));
+			return;
+		}
+		//verifica si el usuario tiene los permisos suficientes para guardar datos de categorias
+		$this->load->model('admin_model');
+		$this->admin_model->adm_id = $this->user_session;
+		if($this->admin_model->get_user_access('articles') == FALSE){
+			$this->response->succeed = FALSE;
+			$this->response->code = 550; //permiso denegado
+			$this->response->status = 'No tienes privilegios suficientes para realizar esta acción';
+			$this->output->set_content_type('application/json')->set_output(json_encode($this->response));
+			return;
+		}
+		//si todo es correcto continua con la funcion
+		$this->load->model('article_model');
+		$this->article_model->adm_id = $this->user_session;
+		$this->article_model->art_titulo = $this->input->post('art_titulo');
+		$this->article_model->art_url = $this->input->post('art_url');
+		$this->article_model->art_portada = $this->input->post('art_portada');
+		$this->article_model->art_abstracto = $this->input->post('art_abstracto');
+		$this->article_model->art_contenido = $this->input->post('art_contenido');
+		$this->article_model->art_etiquetas = $this->input->post('art_etiquetas');
+		$this->article_model->art_estado = $this->input->post('art_estado');
+		$this->article_model->art_fecha = $this->input->post('art_fecha');
+		$this->article_model->art_pdf = $this->input->post('art_pdf');
+		$this->article_model->art_autores = $this->input->post('art_autores');
+		$this->article_model->art_categorias = $this->input->post('art_categorias');
+		$this->response->succeed = $this->article_model->create_article();
+		if($this->response->succeed == TRUE){
+			$this->response->code = 200; //ok
+			$this->response->status = 'El artículo se ha guardado correctamente';
+		} else{
+			$this->response->code = 500; //error interno del servidor
+			$this->response->status = 'Ha ocurrido un error, intentelo de nuevo más tarde';
+		}
 		$this->output->set_content_type('application/json')->set_output(json_encode($this->response));
 		return;
 	}

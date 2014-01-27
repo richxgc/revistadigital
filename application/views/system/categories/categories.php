@@ -31,8 +31,8 @@
 						<td><?php echo $category->cat_url; ?></td>
 						<td><div class="color" style="background-color:<?php echo $category->cat_color; ?>"></div></td>
 						<td><?php echo $category->cat_super; ?></td>
-						<td><a href="<?php echo base_url().index_page().'/admin/categorias/editar/'.$category->cat_id; ?>" title="Editar <?php echo $category->cat_nombre; ?>"><i class="fa fa-edit"></i></a></td>
-						<td><a href="#" class="delete-category" id="dc-<?php echo $category->cat_id; ?>" title="Eliminar <?php echo $category->cat_nombre; ?>"><i class="fa fa-times"></i></a></td>
+						<td><a href="<?php echo base_url().index_page().'/admin/categorias/editar/'.$category->cat_id; ?>" class="only-icon" title="Editar <?php echo $category->cat_nombre; ?>"><i class="fa fa-edit"></i></a></td>
+						<td><a href="#" class="delete-category only-icon" id="dc-<?php echo $category->cat_id; ?>" title="Eliminar <?php echo $category->cat_nombre; ?>"><i class="fa fa-times"></i></a></td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>

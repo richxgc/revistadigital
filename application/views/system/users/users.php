@@ -27,8 +27,8 @@
 						<td><?php echo $us->adm_nombre; ?></td>
 						<td><?php echo $us->adm_email; ?></td>
 						<td><?php echo $us->adm_modulos; ?></td>
-						<td><a href="<?php echo base_url().index_page().'/admin/usuarios/editar/'.$us->adm_id; ?>" title="Editar <?php echo $us->adm_nombre; ?>"><i class="fa fa-edit"></i></a></td>
-						<td><a href="#" class="delete-user" id="du-<?php echo $us->adm_id; ?>" title="Eliminar <?php echo $us->adm_nombre; ?>"><i class="fa fa-times"></i></a></td>
+						<td><a href="<?php echo base_url().index_page().'/admin/usuarios/editar/'.$us->adm_id; ?>" class="only-icon" title="Editar <?php echo $us->adm_nombre; ?>"><i class="fa fa-edit"></i></a></td>
+						<td><a href="#" class="delete-user only-icon" id="du-<?php echo $us->adm_id; ?>" title="Eliminar <?php echo $us->adm_nombre; ?>"><i class="fa fa-times"></i></a></td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
@@ -72,7 +72,7 @@
 						a él estos se convertiran en propiedad del primer usuario dentro del sistema.
 						<br/>
 						Por motivos de seguridad es necesario que nos proporciones tu contraseña del sistema. 
-						Las categorias solo pueden ser eliminadas si se tienen los permisos necesarios.
+						Los usuarios solo se pueden eliminar si se tienen los permisos necesarios.
 					</p>
 				</section>
 				<footer class="modal-footer">

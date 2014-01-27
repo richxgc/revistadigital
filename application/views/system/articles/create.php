@@ -31,6 +31,16 @@
 							<p class="help-block">La dirección con la los lectores podrán acceder al artículo. Mínimo 5 caracteres y máximo 150, solo caracteres alfanumericos y guiones medios.</p>
 						</div>
 						<div class="form-group">
+							<label for="art_portada">Portada</label>
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default btn-filesystem" data-upload-method="input" data-upload-point="#art_portada" title="Insertar imagen">Insertar imagen</button>
+								</span>
+								<input type="url" class="form-control" name="art_portada" id="art_portada" required/>
+							</div>
+							<p class="help-block">La imagen que aparecerá en la portada de la revista. Requerido.</p>
+						</div>
+						<div class="form-group">
 							<label for="art_abstracto">Extracto</label>
 							<textarea class="form-control" placeholder="Breve resumen del artículo" name="art_abstracto" id="art_abstracto" rows="5" required></textarea>
 							<p class="help-block">Un extracto del artículo sin formato y no más de 500 caractes. Sirve para mostrar un breve resumen en las vistas de la revista.</p>
@@ -45,7 +55,7 @@
 						<div class="row">
 							<div class="col-lg-12" style="margin-top:25px;">
 								<div class="panel panel-default">
-									<header class="panel-heading"><i class="fa fa-rss"></i> <label for="art_fecha">Publicar<label></header>
+									<header class="panel-heading"><i class="fa fa-rss"></i> <label for="art_fecha">Publicar</label> <img src="<?php echo base_url('images'); ?>/loading.gif" atl="Cargando..." id="loading-img" class="pull-right" width="25" height="25" style="display:none;"/></header>
 									<div class="panel-body">
 										<div class="input-group">
 											<input type="date" class="form-control" placeholder="21/01/2014" name="art_fecha" id="art_fecha" title="Fecha de publicación" required/>
@@ -58,7 +68,7 @@
 											</select>
 											<span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 										</div>
-										<button type="submit" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Guardar</button>
+										<button type="submit" class="btn btn-success btn-block" id="btn-submit"><i class="fa fa-upload"></i> Guardar</button>
 									</div>
 								</div>
 							</div>
@@ -66,7 +76,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="panel panel-default">
-									<header class="panel-heading"><i class="fa fa-users"></i> <label for="art_buscar_autores">Autores</label> <img src="<?php echo base_url('images'); ?>/loading-alt.gif" atl="Cargando..." id="loading-authors" class="pull-right" width="25" height="25" style="display:none;"></header>
+									<header class="panel-heading"><i class="fa fa-users"></i> <label for="art_buscar_autores">Autores</label> <img src="<?php echo base_url('images'); ?>/loading-alt.gif" atl="Cargando..." id="loading-authors" class="pull-right" width="25" height="25" style="display:none;"/></header>
 									<div class="panel-body" id="panel-author">
 										<div class="input-group">
 											<input type="text" class="form-control" placeholder="Buscar un autor" id="art_buscar_autores"/>
@@ -110,7 +120,7 @@
 								<div class="panel panel-default">
 									<header class="panel-heading"><i class="fa fa-tags"></i> <label form="art_etiquetas">Etiquetas</label></header>
 									<div class="panel-body">
-										<input type="text" class="form-control" placeholder="Etiquetas del artículo" name="art_etiquetas" id="art_etiquetas" pattern="^[\w\W\-\_\]{0,}$" required/>
+										<input type="text" class="form-control" placeholder="Etiquetas del artículo" name="art_etiquetas" id="art_etiquetas"/>
 									</div>
 									<footer class="panel-footer">
 										<p class="help-block">Escriba las etiquetas separadas por comas y sin espacios.</p>
@@ -123,7 +133,12 @@
 								<div class="panel panel-default">
 									<header class="panel-heading"><i class="fa fa-file-text"></i> <label form="art_pdf">Documento</label></header>
 									<div class="panel-body">
-										<input type="file" accept="application/pdf" name="art_pdf" id="art_pdf" style="max-width:100%;"/>
+										<div class="input-group">
+											<input type="url" class="form-control" name="art_pdf" id="art_pdf"/>
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default btn-filesystem only-icon" data-upload-method="input" data-upload-point="#art_pdf" title="Insertar imagen"><i class="fa fa-plus-circle"></i></button>
+											</span>
+										</div>
 									</div>
 									<footer class="panel-footer">
 										<p class="help-block">Un documento adjunto al artículo. Solo archivos PDF.</p>
@@ -138,5 +153,5 @@
 	</div>
 </div>
 <script type="text/javascript">
-	var base_url = '<?php echo base_url(); ?>';
+	var base_domain = '<?php echo base_url(); ?>';
 </script>

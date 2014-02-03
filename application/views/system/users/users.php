@@ -22,13 +22,17 @@
 				</thead>
 				<tbody>
 					<?php foreach($users as $us): ?>
-					<tr id="usr-<?php echo $us->adm_id; ?>">
+					<tr>
 						<td><?php echo $us->adm_id; ?></td>
 						<td><?php echo $us->adm_nombre; ?></td>
 						<td><?php echo $us->adm_email; ?></td>
 						<td><?php echo $us->adm_modulos; ?></td>
 						<td><a href="<?php echo base_url().index_page().'/admin/usuarios/editar/'.$us->adm_id; ?>" class="only-icon" title="Editar <?php echo $us->adm_nombre; ?>"><i class="fa fa-edit"></i></a></td>
-						<td><a href="#" class="delete-user only-icon" id="du-<?php echo $us->adm_id; ?>" title="Eliminar <?php echo $us->adm_nombre; ?>"><i class="fa fa-times"></i></a></td>
+						<?php if($us->adm_tipo == 'super'): ?>
+						<td></td>
+						<?php else: ?>
+						<td><a href="#" class="delete-user only-icon" data-delete-id="<?php echo $us->adm_id; ?>" title="Eliminar <?php echo $us->adm_nombre; ?>"><i class="fa fa-times"></i></a></td>
+						<?php endif; ?>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
@@ -39,15 +43,15 @@
 				<?php 
 					$pages = intval($total_users / 10); 
 					if($total_users % 10 > 0){ $pages += 1;}
-					$limit = 10; $offset = 0;
+					$offset = 1;
 				?>
 				<ul class="pagination">
 					<li><a href="<?php echo base_url().index_page(); ?>/admin/usuarios" title="Ir al principio">&laquo;</a></li>
 					<?php for($i=0; $i<$pages; $i++): ?>
-					<li><a href="<?php echo base_url().index_page().'/admin/usuarios/'.$limit.'/'.$offset; ?>"><?php echo ($i + 1); ?></a></li>
-					<?php $offset += 10; ?>
+					<li><a href="<?php echo base_url().index_page().'/admin/usuarios/'.$offset; ?>"><?php echo ($i + 1); ?></a></li>
+					<?php $offset += 1; ?>
 					<?php endfor; ?>
-					<li><a href="<?php echo base_url().index_page().'/admin/usuarios/'.$limit.'/'.($offset-10); ?>" title="Ir al final">&raquo;</a></li>
+					<li><a href="<?php echo base_url().index_page().'/admin/usuarios/'.($offset-1); ?>" title="Ir al final">&raquo;</a></li>
 				</ul>
 			</aside>
 			<?php endif; ?>
@@ -69,7 +73,7 @@
 					</div>
 					<p class="help-block">
 						Estas ha punto de eliminar un usuario del sistema para siempre. Si el usuario tiene artículos realacionados
-						a él estos se convertiran en propiedad del primer usuario dentro del sistema.
+						a él estos serán marcados como si ningún administrador los hubiera publicado.
 						<br/>
 						Por motivos de seguridad es necesario que nos proporciones tu contraseña del sistema. 
 						Los usuarios solo se pueden eliminar si se tienen los permisos necesarios.

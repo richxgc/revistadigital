@@ -5,8 +5,6 @@ var drop_zone = null;
 var input_up = null;
 //the function intialize the drag&drop file upload plugin
 function initDnDUpload(){
-	//launches modal / for testing
-	//$('#modal-file-upload').modal('show');
 	//check if some HTML5 APIs are available
 	if(window.File && window.FileReader && window.FileList && window.Blob){
 		//if the APIs are supported create some event listeners

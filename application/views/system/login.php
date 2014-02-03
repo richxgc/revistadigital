@@ -30,9 +30,9 @@
 					<section class="col-lg-12">
 						<form class="form-horizontal" role="form" method="post" action="#" id="form-login">
 							<div class="form-group">
-								<label for="adm_nombre" class="control-label col-lg-3">Nombre de usuario</label>
+								<label for="adm_email" class="control-label col-lg-3">Correo electrónico</label>
 								<div class="col-lg-4">
-									<input type="text" class="form-control input-lg" name="adm_nombre" id="adm_nombre" placeholder="nombre de usuario" required/>
+									<input type="email" class="form-control input-lg" name="adm_email" id="adm_email" placeholder="correo" required/>
 								</div>
 							</div>
 							<div class="form-group">

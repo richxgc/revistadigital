@@ -11,7 +11,7 @@ $(document).ready(function() {
 		locale: "es-ES"
 	});
 
-	$(document).on('submit','#form-create-article',function(e){
+	$(document).on('submit','#form-edit-article',function(e){
 		e.preventDefault();
 		//verifica si existen usuarios y categorias seleccionadas solo aplica si el documento sera publicado
 		if($('input[name="art_autores[]"]').length == 0 && $('#art_estado').val() == 'publicado'){
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		$('#btn-submit').prop('disabled', true);
 		$('#loading-img').fadeIn('fast');
 		$.ajax({
-			url: path + '/articulos/create_article',
+			url: path + '/articulos/save_article',
 			type: 'post',
 			data: dataString,
 			dataType: 'json',
@@ -63,5 +63,5 @@ $(document).ready(function() {
 			}
 		});
 	});
-
+	
 });

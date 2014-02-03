@@ -40,14 +40,30 @@
 //rutas por defecto para configuracion
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
-//rutas de articulos / administracion
-$route['admin/articulos/nuevo'] = 'admin/new_article';
-//rutas de categorias / administracion
-$route['admin/categorias/nueva'] = 'admin/new_category';
-$route['admin/categorias/editar/(:num)'] = 'admin/edit_category/$1';
+
+/*-------------------RUTAS DE LA ADMINISTRACION--------------*/
+
+//rutas generales / administracion
+$route['admin'] = 'admin/inicio';
+$route['admin/login'] = 'admin/inicio/login';
+$route['admin/logout'] = 'admin/inicio/logout';
+$route['admin/login_now'] = 'admin/inicio/login_now';
+
 //rutas de usuarios / administracion
-$route['admin/usuarios/nuevo'] = 'admin/new_user';
-$route['admin/usuarios/editar/(:num)'] = 'admin/edit_user/$1';
+$route['admin/usuarios/(:num)'] = 'admin/usuarios/index/$1';
+$route['admin/usuarios/nuevo'] = 'admin/usuarios/new_user';
+$route['admin/usuarios/editar/(:num)'] = 'admin/usuarios/edit_user/$1';
+$route['admin/mi_cuenta'] = 'admin/usuarios/account';
+
+//rutas de articulos / administracion
+$route['admin/articulos'] = 'admin/articulos/index';
+$route['admin/articulos/nuevo'] = 'admin/articulos/new_article';
+$route['admin/articulos/editar/(:num)'] = 'admin/articulos/edit_article/$1';
+
+//rutas de categorias / administracion
+$route['admin/categorias/(:num)'] = 'admin/categorias/index/$1';
+$route['admin/categorias/nueva'] = 'admin/categorias/new_category';
+$route['admin/categorias/editar/(:num)'] = 'admin/categorias/edit_category/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

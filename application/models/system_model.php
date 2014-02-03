@@ -34,7 +34,8 @@ class System_model extends CI_Model {
 		//insertar datos del usuario principal
 		$this->db->set('adm_nombre',$this->adm_nombre);
 		$this->db->set('adm_email',$this->adm_email);
-		$this->db->set('adm_password',$this->adm_password);
+		$this->db->set('adm_password',crypt($this->adm_password));
+		$this->db->set('adm_tipo','super'); //define al super administrador del sistema
 		$this->db->insert($this->adm_table);
 		$this->adm_id = $this->db->insert_id();
 		//insertar datos de las rutas de los modulos de administracion

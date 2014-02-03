@@ -5,6 +5,6 @@ function call_alert(alert_class,alert_text,callback){
 		setTimeout(function(){
 			$('#alert-overlay').fadeOut('slow',function(){$(this).removeClass(alert_class);});
 			callback();
-		},1000);
+		},2000);
 	});
 }

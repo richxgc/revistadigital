@@ -32,9 +32,9 @@
 					<section class="col-lg-12">
 						<form class="form-horizontal" role="form" method="post" action="#" id="form-install" autocomplete="off">
 							<div class="form-group">
-								<label for="adm_nombre" class="control-label col-lg-3">Nombre de usuario</label>
+								<label for="adm_nombre" class="control-label col-lg-3">Nombre del usuario</label>
 								<div class="col-lg-4">
-									<input type="text" class="form-control input-lg" name="adm_nombre" id="adm_nombre" placeholder="ej. mi_nombre_de_usuario" pattern="^[\w\-\.]{5,15}$" title="Nombre de usuario: longitud mínima de 5 caracteres" required/>
+									<input type="text" class="form-control input-lg" name="adm_nombre" id="adm_nombre" placeholder="ej. Administrador Revista" pattern="^[\w\W\_\-\.]{5,150}$" title="Nombre de usuario: longitud mínima de 5 caracteres" required/>
 								</div>
 							</div>
 							<div class="form-group">

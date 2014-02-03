@@ -29,7 +29,7 @@ $(document).ready(function() {
 		$('#loading-img').fadeIn('fast');
 		var dataString = $(this).serialize();
 		$.ajax({
-			url: path + '/create_category',
+			url: path + '/categorias/create_category',
 			type: 'post',
 			data: dataString,
 			dataType: 'json',

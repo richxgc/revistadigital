@@ -9,16 +9,16 @@
 		</nav>
 		<section class="col-lg-9">
 			<h2 class="margin-0">Nuevo Usuario</h2>
-			<form class="form" method="post" action="#" id="form-create-user" autocomplete="off">
+			<form class="form-admin" method="post" action="#" id="form-create-user" autocomplete="off">
 				<div class="form-group">
-					<label for="adm_nombre">Nombre de usuario</label>
-					<input type="text" class="form-control" name="adm_nombre" id="adm_nombre" placeholder="Nombre de usuario" pattern="^[\w\-\_\.]{5,50}$" required/>
-					<p class="help-block">Es el nombre o nick con el que se tiene acceso al sistema. Debe tener minímo 5 caracteres y solo pueden ser alfanumericos, puntos y guiones.</p>
+					<label for="adm_nombre">Nombre del usuario</label>
+					<input type="text" class="form-control" name="adm_nombre" id="adm_nombre" placeholder="Nombre de usuario" pattern="^[\w\W\-\_\.]{5,150}$" required/>
+					<p class="help-block">Es el nombre con el que se podra identificar a un usuario dentro del sistema. Debe tener minímo 5 caracteres.</p>
 				</div>
 				<div class="form-group">
 					<label for="adm_email">Correo electrónico</label>
 					<input type="email" class="form-control" name="adm_email" id="adm_email" placeholder="Correo electrónico" required/>
-					<p class="help-block">Se requiere una dirección de correo electrónico para poder enviar notificaciones al usuario. El usuario podrá modificar la dirección posteriormente.</p>
+					<p class="help-block">La dirección de correo para acceder al sistema y enviar notificaciones. El usuario podrá modificar la dirección posteriormente.</p>
 				</div>
 				<div class="form-group">
 					<label for="adm_password">Contraseña</label>
@@ -39,17 +39,17 @@
 					</div>
 					<div class="checkbox col-lg-3">
 						<label>
-							<input type="checkbox" name="modules[]" value="publish"/> Publicar Artículos
+							<input type="checkbox" name="modules[]" value="articles"/> Publicar Artículos
+						</label>
+					</div>
+					<div class="checkbox col-lg-3">
+						<label>
+							<input type="checkbox" name="modules[]" value="categories"/> Modificar Categorias
 						</label>
 					</div>
 					<div class="checkbox col-lg-3">
 						<label>
 							<input type="checkbox" name="modules[]" value="users"/> Modificar Usuarios
-						</label>
-					</div>						
-					<div class="checkbox col-lg-3">
-						<label>
-							<input type="checkbox" name="modules[]" value="categories"/> Modificar Categorias
 						</label>
 					</div>
 					<p class="help-block">Estos son los modulos a los que el usuario tendra acceso. Solo pueden ser modificados por alguien que tenga acceso al modulo de usuarios.</p>

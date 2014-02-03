@@ -28,7 +28,7 @@ $(document).ready(function() {
 		$('#loading-img').fadeIn('fast');
 		var dataString = $(this).serialize();
 		$.ajax({
-			url: path + '/save_category',
+			url: path + '/categorias/save_category',
 			type: 'post',
 			data: dataString,
 			dataType: 'json',

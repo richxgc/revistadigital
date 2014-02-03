@@ -12,21 +12,33 @@ class Admin_model extends CI_Model {
 
 	function login(){
 		$response = new stdClass();
-		if($this->adm_nombre == NULL || $this->adm_password == NULL){
+		//verifica si existen datos de entrada
+		if($this->adm_email == NULL || $this->adm_password == NULL){
 			$response->succeed = FALSE;
+			return $response;
 		}
-		$this->db->select('adm_id,adm_nombre');
-		$this->db->where('adm_nombre',$this->adm_nombre);
-		$this->db->where('adm_password',$this->adm_password);
+		//obtiene los datos del usuario segun el email ingresado
+		$this->db->select('*');
+		$this->db->where('adm_email',$this->adm_email);
 		$this->db->from($this->adm_table);
 		$user = $this->db->get()->row();
 		if(sizeof($user) > 0){
-			$response->succeed = TRUE;
-			$response->adm_id = $user->adm_id;
-			$response->adm_nombre = $user->adm_nombre;
-		} else{
+			//si el usuario existe verifica que sea la contraseña correcta
+			$hashed_pswd = $user->adm_password;
+			if(crypt($this->adm_password,$hashed_pswd) == $hashed_pswd){
+				//la contraseña y el usuario son correctos
+				$response->succeed = TRUE;
+				$response->adm_id = $user->adm_id;
+				$response->adm_nombre = $user->adm_nombre;
+			} else {
+				//la contraseña no es la correcta
+				$response->succeed = FALSE;
+			}
+		} else {
+			//el usuario no existe
 			$response->succeed = FALSE;
 		}
+		//regresa la respuesta al controlador
 		return $response;
 	}
 
@@ -41,7 +53,7 @@ class Admin_model extends CI_Model {
 		if($this->adm_id == NULL){
 			return array();
 		}
-		$this->db->select('adm_id,adm_nombre,adm_email');
+		$this->db->select('adm_id,adm_nombre,adm_email,adm_tipo');
 		$this->db->where('adm_id',$this->adm_id);
 		$this->db->from($this->adm_table);
 		$user = $this->db->get()->row();
@@ -52,7 +64,7 @@ class Admin_model extends CI_Model {
 	}
 
 	function get_users_at($limit,$offset){
-		$this->db->select('adm_id,adm_nombre,adm_email');
+		$this->db->select('adm_id,adm_nombre,adm_email,adm_tipo');
 		$this->db->order_by('adm_id','ASC');
 		$this->db->limit($limit,$offset);
 		$this->db->from($this->adm_table);
@@ -126,12 +138,59 @@ class Admin_model extends CI_Model {
 		}
 	}
 
-	function get_user_password(){
+	function check_for_password(){
 		$this->db->select('adm_password');
 		$this->db->where('adm_id',$this->adm_id);
 		$this->db->from($this->adm_table);
-		$query = $this->db->get();
-		return $query->row()->adm_password;
+		$query = $this->db->get()->row();
+		if(sizeof($query) > 0){
+			$hashed_pswd = $query->adm_password;
+			if(crypt($this->adm_password,$hashed_pswd) == $hashed_pswd){
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+		} else {
+			return FALSE;
+		}
+	}
+
+	function check_for_email(){
+		$this->db->select('adm_id,adm_email');
+		$this->db->where('adm_email',$this->adm_email);
+		$this->db->from($this->adm_table);
+		$query = $this->db->get()->row();
+		if(sizeof($query) > 0 && $this->adm_id != $query->adm_id){
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	function save_account(){
+		if($this->adm_id == NULL || $this->adm_nombre == NULL || $this->adm_email == NULL){
+			return FALSE;
+		}
+		$data = NULL;
+		if($this->adm_password == NULL || $this->adm_password == ''){
+			$data = array(
+				'adm_nombre' => $this->adm_nombre,
+				'adm_email' => $this->adm_email,
+			);
+		} else {
+			$data = array(
+				'adm_nombre' => $this->adm_nombre,
+				'adm_email' => $this->adm_email,
+				'adm_password' => crypt($this->adm_password),
+			);
+		}
+		$this->db->where('adm_id',$this->adm_id);
+		if($this->db->update($this->adm_table,$data)){
+			return TRUE;
+		} else{
+			return FALSE;
+		}
+
 	}
 
 	function create_user(){
@@ -142,7 +201,7 @@ class Admin_model extends CI_Model {
 		$this->db->trans_begin();
 		$this->db->set('adm_nombre',$this->adm_nombre);
 		$this->db->set('adm_email',$this->adm_email);
-		$this->db->set('adm_password',$this->adm_password);
+		$this->db->set('adm_password',crypt($this->adm_password));
 		$this->db->insert($this->adm_table);
 		$this->adm_id = $this->db->insert_id();
 		if($this->adm_modulos != NULL || $this->adm_modulos != ''){
@@ -168,7 +227,7 @@ class Admin_model extends CI_Model {
 	}
 
 	function save_user(){
-		if($this->adm_id == NULL || $this->adm_nombre == NULL || $this->adm_email == NULL || $this->adm_password == NULL){
+		if($this->adm_id == NULL || $this->adm_nombre == NULL || $this->adm_email == NULL){
 			return FALSE;
 		}
 		//comienza transacción en la base de datos
@@ -176,24 +235,28 @@ class Admin_model extends CI_Model {
 		$data = array(
 			'adm_nombre' => $this->adm_nombre,
 			'adm_email' => $this->adm_email,
-			'adm_password' => $this->adm_password,
 		);
 		$this->db->where('adm_id',$this->adm_id);
 		$this->db->update($this->adm_table,$data);
-		//elimina los permisos anteriores
-		$this->db->where('adm_id',$this->adm_id);
-		$this->db->delete('acceso_administracion');
-		if($this->adm_modulos != NULL || $this->adm_modulos != ''){	
-			foreach($this->adm_modulos as $module){
-				//obtener el id del modulo que se desea dar de alta
-				$this->db->select('mad_id');
-				$this->db->where('mad_nombre',$module);
-				$this->db->from('modulos_administracion');
-				$module_id = $this->db->get()->row()->mad_id;
-				//insertar la relacion de modulos en la base de datos
-				$this->db->set('adm_id',$this->adm_id);
-				$this->db->set('mad_id',$module_id);
-				$this->db->insert('acceso_administracion');
+		//verifica si es el ultimo usuario del sistema y le prohibe modificar sus permisos
+		$total_users = $this->get_total_users();
+		//si hay mas de 1 usuario en el sistema continua con la modificacion de permisos
+		if($total_users > 1 && $this->adm_modulos != 'all'){
+			//elimina los permisos anteriores para insertar los nuevos
+			$this->db->where('adm_id',$this->adm_id);
+			$this->db->delete('acceso_administracion');
+			if($this->adm_modulos != NULL || $this->adm_modulos != ''){	
+				foreach($this->adm_modulos as $module){
+					//obtener el id del modulo que se desea dar de alta
+					$this->db->select('mad_id');
+					$this->db->where('mad_nombre',$module);
+					$this->db->from('modulos_administracion');
+					$module_id = $this->db->get()->row()->mad_id;
+					//insertar la relacion de modulos en la base de datos
+					$this->db->set('adm_id',$this->adm_id);
+					$this->db->set('mad_id',$module_id);
+					$this->db->insert('acceso_administracion');
+				}
 			}
 		}
 		if($this->db->trans_status() === FALSE){

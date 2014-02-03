@@ -23,6 +23,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user; ?> <i class="fa fa-bars"></i></a>
 					<ul class="dropdown-menu">
+						<li><a href="<?php echo base_url().index_page(); ?>/admin/mi_cuenta"><i class="fa fa-user"></i> Mi cuenta</a></li>
 						<li><a href="<?php echo base_url().index_page(); ?>/admin/logout"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
 					</ul>
 				</li>

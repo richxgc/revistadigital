@@ -24,7 +24,7 @@
 				</thead>
 				<tbody>
 					<?php foreach($categories as $category): ?>
-					<tr id="cat-<?php echo $category->cat_id; ?>">
+					<tr>
 						<td><?php echo $category->cat_id; ?></td>
 						<td><?php echo $category->cat_articulos; ?></td>
 						<td><?php echo $category->cat_nombre; ?></td>
@@ -32,7 +32,7 @@
 						<td><div class="color" style="background-color:<?php echo $category->cat_color; ?>"></div></td>
 						<td><?php echo $category->cat_super; ?></td>
 						<td><a href="<?php echo base_url().index_page().'/admin/categorias/editar/'.$category->cat_id; ?>" class="only-icon" title="Editar <?php echo $category->cat_nombre; ?>"><i class="fa fa-edit"></i></a></td>
-						<td><a href="#" class="delete-category only-icon" id="dc-<?php echo $category->cat_id; ?>" title="Eliminar <?php echo $category->cat_nombre; ?>"><i class="fa fa-times"></i></a></td>
+						<td><a href="#" class="delete-category only-icon" data-delete-id="<?php echo $category->cat_id; ?>" title="Eliminar <?php echo $category->cat_nombre; ?>"><i class="fa fa-times"></i></a></td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
@@ -46,15 +46,15 @@
 				<?php 
 					$pages = intval($total_categories / 10); 
 					if($total_categories % 10 > 0){ $pages += 1;}
-					$limit = 10; $offset = 0;
+					$offset = 1;
 				?>
 				<ul class="pagination">
 					<li><a href="<?php echo base_url().index_page(); ?>/admin/categorias" title="Ir al principio">&laquo;</a></li>
 					<?php for($i=0; $i<$pages; $i++): ?>
-					<li><a href="<?php echo base_url().index_page().'/admin/categorias/'.$limit.'/'.$offset; ?>"><?php echo ($i + 1); ?></a></li>
-					<?php $offset += 10; ?>
+					<li><a href="<?php echo base_url().index_page().'/admin/categorias/'.$offset; ?>"><?php echo ($i + 1); ?></a></li>
+					<?php $offset += 1; ?>
 					<?php endfor; ?>
-					<li><a href="<?php echo base_url().index_page().'/admin/categorias/'.$limit.'/'.($offset-10); ?>" title="Ir al final">&raquo;</a></li>
+					<li><a href="<?php echo base_url().index_page().'/admin/categorias/'.($offset-1); ?>" title="Ir al final">&raquo;</a></li>
 				</ul>
 			</aside>
 			<?php endif; ?>
@@ -68,7 +68,7 @@
 			<form role="form" method="post" action="#" id="form-delete-post">
 				<header class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="md-title">Eliminar Categoria</h4>
+					<h4 class="modal-title" id="md-title">Eliminar Categoría</h4>
 				</header>
 				<section class="modal-body">
 					<div class="form-group">

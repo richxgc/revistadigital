@@ -22,7 +22,7 @@ $(document).ready(function() {
 		$('#loading-img').fadeIn('fast');
 		var dataString = $(this).serialize();
 		$.ajax({
-			url: path + '/create_user',
+			url: path + '/usuarios/create_user',
 			type: 'post',
 			data: dataString,
 			dataType: 'json',

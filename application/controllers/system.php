@@ -25,7 +25,7 @@ class System extends CI_Controller {
 		$response = new stdClass();
 		$this->system_model->adm_nombre = $this->input->post('adm_nombre');
 		$this->system_model->adm_email = $this->input->post('adm_email');
-		$this->system_model->adm_password = sha1($this->input->post('adm_password'));
+		$this->system_model->adm_password = $this->input->post('adm_password');
 		$response->succeed = $this->system_model->install_system();
 		$this->output->set_content_type('application/json')->set_output(json_encode($response));
 		return;

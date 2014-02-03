@@ -12,9 +12,7 @@ $(document).ready(function() {
 			success: function(response){
 				$('#loading-img').fadeOut('fast');
 				if(response.succeed == true){
-					call_alert('alert-success','Iniciando la sesión',function(){
-						window.location = path;	
-					});
+					window.location = path;
 				} else{
 					$('#button-submit').prop('disabled',false);
 					call_alert('alert-danger','El usuario o contraseña es incorrecto.',function(){});

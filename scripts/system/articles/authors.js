@@ -11,7 +11,7 @@ function searchAuthor(search_string){
 	$('#loading-authors').fadeIn('fast');
 	$('#search-author-list').empty();
 	$.ajax({
-		url: path + '/search_authors',
+		url: path + '/articulos/search_authors',
 		type: 'post',
 		data: {'search': search_string},
 		dataType: 'json',
@@ -33,7 +33,7 @@ function searchAuthor(search_string){
 						if(authors[i].usr_imagen != ''){
 							//TODO: mostrar lista con imagen del usuario
 						} else{
-							var author = '<li class="list-group-item"><a href="#" class="add-author" id="aut-'+authors[i].usr_id+'"><img src="'+base_domain+'/images/profile_thumbnail.jpg" width="20" height="20" style="margin-right:5px;"/>'+authors[i].usr_nombre+'</a></li>';
+							author = '<li class="list-group-item"><a href="#" class="add-author" id="aut-'+authors[i].usr_id+'"><img src="'+base_domain+'images/profile_thumbnail.jpg" width="20" height="20" style="margin-right:5px;"/>'+authors[i].usr_nombre+'</a></li>';
 						}
 						$('#search-author-list').append(author);
 					}
@@ -83,18 +83,17 @@ $(document).on('click','.add-author',function(e){
 	e.preventDefault();
 	$('#art_buscar_autores').val('');
 	var author_id = $(this).attr('id').substr(4);
+	var author_image = $(this).children('img').attr('src');
 	var author_name = $(this).text();
-	var list_obj = '<li id="lau-'+author_id+'">'+author_name+' <a href="#" role="button" class="remove-author" id="da-'+author_id+'" title="Eliminar autor"><i class="fa fa-times"></i></a></li>';
-	var input_obj = '<input type="hidden" name="art_autores[]" id="art_autores-'+author_id+'" value="'+author_id+'"/>';
+	var list_obj =  '<li><img src="'+author_image+'" alt="img" width="20" height="20"/>'+
+					' '+author_name+' <a href="#" class="remove-author" title="Eliminar autor"><i class="fa fa-times"></i></a>'+
+					'<input type="hidden" name="art_autores[]" value="'+author_id+'"/></li>';
 	$('#authors-list').append(list_obj);
-	$('#panel-author').append(input_obj);
+	console.log(author_image);
 });
 
 $(document).on('click','.remove-author',function(e){
 	e.preventDefault();
-	var author_id = $(this).attr('id').substr(3);
-	$('#lau-'+author_id).fadeOut('slow',function(){
-		$(this).remove();
-		$('#art_autores-'+author_id).remove();
-	});
+	var to_delete = $(this).parent('li');
+	to_delete.fadeOut('slow',function(){$(this).remove();});
 });

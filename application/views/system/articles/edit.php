@@ -4,29 +4,30 @@
 			<ul class="nav nav-pills nav-stacked box-1 nav-fixed">
 				<h2>Artículos</h2>
 				<li><a href="<?php echo base_url().index_page(); ?>/admin/articulos" title="Artículos publicados"><i class="fa fa-list-alt"></i></a></li>
-				<li><a href="<?php echo base_url().index_page(); ?>/admin/articulos/borrador" title="Artículos en borrador"><i class="fa fa-archive"></i></a></li>
-				<li class="active"><a href="<?php echo base_url().index_page(); ?>/admin/articulos/nuevo" title="Nuevo artículo"><i class="fa fa-pencil-square-o"></i></a></li>
+				<li><a href="<?php echo base_url().index_page(); ?>/admin/articulos/10/0/borrador" title="Artículos en borrador"><i class="fa fa-archive"></i></a></li>
+				<li><a href="<?php echo base_url().index_page(); ?>/admin/articulos/nuevo" title="Nuevo artículo"><i class="fa fa-pencil-square-o"></i></a></li>
 			</ul>
 		</nav>
 		<section class="col-lg-11">
 			<div class="row">
 				<div class="col-lg-12">
-					<h2 class="margin-0">Publicar Artículo</h2>
+					<h2 class="margin-0">Editar - <?php echo $article->art_titulo; ?></h2>
 				</div>
 			</div>
-			<form class="form-admin" method="post" action="#" class="" id="form-create-article">
+			<form class="form-admin" method="post" action="#" id="form-edit-article">
+				<input type="hidden" name="art_id" value="<?php echo $article->art_id; ?>"/>
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="form-group">
 							<label for="art_titulo">Título</label>
-							<input type="text" class="form-control" placeholder="Título del artículo" name="art_titulo" id="art_titulo" pattern="^[\w\W\s\-\_]{5,150}$" required/>
+							<input type="text" class="form-control" placeholder="Título del artículo" name="art_titulo" id="art_titulo" value="<?php echo $article->art_titulo; ?>" pattern="^[\w\W\s\-\_]{5,150}$" required/>
 							<p class="help-block">El título que mostrará el artículo en la revista, tiene que ser único. Mínimo 5 caracteres y máximo 150.</p>
 						</div>
 						<div class="form-group">
 							<label for="art_url">Ruta</label>
 							<div class="input-group">
 								<span class="input-group-addon"><?php echo base_url().index_page().'/articulo/'; ?></span>
-								<input type="text" class="form-control" placeholder="titulo-del-articulo" name="art_url" id="art_url" pattern="^[a-zA-Z0-9\-]{5,150}$" required/>
+								<input type="text" class="form-control" placeholder="titulo-del-articulo" name="art_url" id="art_url" value="<?php echo $article->art_url; ?>" pattern="^[a-zA-Z0-9\-]{5,150}$" required/>
 							</div>
 							<p class="help-block">La dirección con la los lectores podrán acceder al artículo. Mínimo 5 caracteres y máximo 150, solo caracteres alfanumericos y guiones medios.</p>
 						</div>
@@ -36,18 +37,18 @@
 								<span class="input-group-btn">
 									<button type="button" class="btn btn-default btn-filesystem" data-upload-method="input" data-upload-point="#art_portada" title="Insertar imagen">Insertar imagen</button>
 								</span>
-								<input type="url" class="form-control" name="art_portada" id="art_portada" required/>
+								<input type="url" class="form-control" name="art_portada" id="art_portada" value="<?php echo $article->art_portada; ?>" required/>
 							</div>
 							<p class="help-block">La imagen que aparecerá en la portada de la revista. Requerido.</p>
 						</div>
 						<div class="form-group">
 							<label for="art_abstracto">Extracto</label>
-							<textarea class="form-control" placeholder="Breve resumen del artículo" name="art_abstracto" id="art_abstracto" rows="5" required></textarea>
+							<textarea class="form-control" placeholder="Breve resumen del artículo" name="art_abstracto" id="art_abstracto" rows="5" required><?php echo $article->art_abstracto; ?></textarea>
 							<p class="help-block">Un extracto del artículo sin formato y no más de 500 caractes. Sirve para mostrar un breve resumen en las vistas de la revista.</p>
 						</div>
 						<div class="form-group">
 							<label for="art_contenido">Contenido</label>
-							<textarea class="form-control" placeholder="Escribe aquí..." name="art_contenido" id="art_contenido" rows="26" required></textarea>
+							<textarea class="form-control" placeholder="Escribe aquí..." name="art_contenido" id="art_contenido" rows="26" required><?php echo $article->art_contenido; ?></textarea>
 							<p class="help-block">El contenido principal del artículo, este puede ser un resumen o síntes del original. Si desea adjuntar el archivo original completo puede hacerlo desde el panel derecho "Documento".</p>
 						</div>
 					</div>
@@ -58,13 +59,13 @@
 									<header class="panel-heading"><i class="fa fa-rss"></i> <label for="art_fecha">Publicar</label> <img src="<?php echo base_url('images'); ?>/loading.gif" atl="Cargando..." id="loading-img" class="pull-right" width="25" height="25" style="display:none;"/></header>
 									<div class="panel-body">
 										<div class="input-group">
-											<input type="date" class="form-control" placeholder="21/01/2014" name="art_fecha" id="art_fecha" title="Fecha de publicación" required/>
+											<input type="date" class="form-control" placeholder="21/01/2014" name="art_fecha" id="art_fecha" title="Fecha de publicación" value="<?php echo $article->art_fecha; ?>" required/>
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 										<div class="input-group" style="margin:10px 0;">
 											<select class="form-control" name="art_estado" id="art_estado" title="Estado de la publicación" required>
-												<option value="borrador">Borrador</option>
-												<option value="publicado">Publicar</option>
+												<option value="borrador" <?php if($article->art_estado == 'borrador'){ echo 'selected'; } ?>>Borrador</option>
+												<option value="publicado" <?php if($article->art_estado == 'publicado'){ echo 'selected'; } ?>>Publicar</option>
 											</select>
 											<span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 										</div>
@@ -83,7 +84,20 @@
 											<span class="input-group-addon"><i class="fa fa-search"></i></span>
 										</div>
 										<ul class="list-group" id="search-author-list"></ul>
-										<ul id="authors-list"></ul>
+										<ul id="authors-list">
+											<?php foreach($article->art_autores as $autor): ?>
+											<li>
+												<?php if(in_array($autor->usr_imagen, array('',NULL))): ?>
+													<img src="<?php echo base_url('images'); ?>/profile_thumbnail.jpg" alt="img" width="20" height="20"/>
+												<?php else: ?>
+													<img src="<?php echo $autor->usr_imagen; ?>" alt="img" width="20" height="20"/>
+												<?php endif; ?>
+												<?php echo $autor->usr_nombre; ?>
+												<a href="#" class="remove-author" title="Eliminar autor"><i class="fa fa-times"></i></a>
+												<input type="hidden" name="art_autores[]" value="<?php echo $autor->usr_id; ?>"/>
+											</li>
+											<?php endforeach; ?>
+										</ul>
 									</div>
 									<footer class="panel-footer">
 										<p class="help-block">Los autores del artículo tienen que estar registrados en la revista.</p>
@@ -107,7 +121,14 @@
 												<button type="button" class="btn btn-default only-icon" id="add-category" title="Agregar categoría"><i class="fa fa-plus-circle"></i></button>
 											</span>
 										</div>
-										<ul id="categories-list"></ul>
+										<ul id="categories-list">
+											<?php foreach($article->art_categorias as $categoria): ?>
+											<li>
+												<?php echo $categoria->cat_nombre; ?> <a href="#" class="delete-category" title="Eliminar catgoría"><i class="fa fa-times"></i></a>
+												<input type="hidden" name="art_categorias[]" value="<?php echo $categoria->cat_id; ?>" />
+											</li>
+											<?php endforeach; ?>
+										</ul>
 									</div>
 									<footer class="panel-footer">
 										<p class="help-block">Las categorías agrupan un conjunto de artículos en un mismo sitio.</p>
@@ -120,7 +141,7 @@
 								<div class="panel panel-default">
 									<header class="panel-heading"><i class="fa fa-tags"></i> <label form="art_etiquetas">Etiquetas</label></header>
 									<div class="panel-body">
-										<input type="text" class="form-control" placeholder="Etiquetas del artículo" name="art_etiquetas" id="art_etiquetas"/>
+										<input type="text" class="form-control" placeholder="Etiquetas del artículo" name="art_etiquetas" id="art_etiquetas" value="<?php echo $article->art_etiquetas; ?>"/>
 									</div>
 									<footer class="panel-footer">
 										<p class="help-block">Escriba las etiquetas separadas por comas y sin espacios.</p>
@@ -134,14 +155,14 @@
 									<header class="panel-heading"><i class="fa fa-file-text"></i> <label form="art_pdf">Documento</label></header>
 									<div class="panel-body">
 										<div class="input-group">
-											<input type="url" class="form-control" name="art_pdf" id="art_pdf"/>
+											<input type="url" class="form-control" name="art_pdf" id="art_pdf" value="<?php echo $article->art_pdf; ?>"/>
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-default btn-filesystem only-icon" data-upload-method="input" data-upload-point="#art_pdf" title="Insertar imagen"><i class="fa fa-plus-circle"></i></button>
 											</span>
 										</div>
 									</div>
 									<footer class="panel-footer">
-										<p class="help-block">Un documento adjunto al artículo. Solo archivos PDF.</p>
+										<p class="help-block">Un documento adjunto al artículo. No es requerido.</p>
 									</footer>
 								</div>
 							</div>

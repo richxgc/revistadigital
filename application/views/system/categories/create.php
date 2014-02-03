@@ -9,7 +9,7 @@
 		</nav>
 		<section class="col-lg-9">
 			<h2 class="margin-0">Nueva Categoría</h2>
-			<form class="form" method="post" action="#" id="form-create-category">
+			<form class="form-admin" method="post" action="#" id="form-create-category">
 				<div class="form-group">
 					<label for="cat_nombre">Nombre</label>
 					<input type="text" class="form-control" placeholder="Nombre de la categoría" name="cat_nombre" pattern="^[\w\W\s\-\_]{5,}$" required/>

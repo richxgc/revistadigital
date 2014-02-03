@@ -9,7 +9,7 @@
 		</nav>
 		<section class="col-lg-9">
 			<h2 class="margin-0">Editar Categoria - <?php echo $category->cat_nombre; ?></h2>
-			<form class="form" method="post" action="#" id="form-edit-category">
+			<form class="form-admin" method="post" action="#" id="form-edit-category">
 				<input type="hidden" name="cat_id" value="<?php echo $category->cat_id; ?>"/>
 				<div class="form-group">
 					<label for="cat_nombre">Nombre</label>

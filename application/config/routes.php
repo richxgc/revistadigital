@@ -38,7 +38,7 @@
 |
 */
 //rutas por defecto para configuracion
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "home";
 $route['404_override'] = '';
 
 /*-------------------RUTAS DE LA ADMINISTRACION--------------*/

@@ -6353,6 +6353,7 @@ button.close {
   display: block;
   height: auto;
   max-width: 100%;
+  width: 100%;
   line-height: 1;
 }
 
@@ -6531,8 +6532,8 @@ button.close {
     font-size: 30px;
   }
   .carousel-caption {
-    right: 20%;
-    left: 20%;
+    /*right: 20%;
+    left: 20%;*/
     padding-bottom: 30px;
   }
   .carousel-indicators {

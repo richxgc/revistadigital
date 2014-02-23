@@ -45,6 +45,10 @@ class Articulos extends CI_Controller {
 		$data['user'] = $this->user_name;
 		$data['status'] = $status;
 		$data['order'] = $order;
+		//obtiene un array con las categorias que puede publicar el usuario
+		$this->admin_model->adm_id = $this->user_session;
+		$admin_acc = $this->admin_model->get_admin_type();
+		//cambia el formato de la cadena de busqueda
 		if($search != NULL){
 			$search = urldecode($search);
 			$data['search'] = $search;
@@ -52,13 +56,13 @@ class Articulos extends CI_Controller {
 			$data['search'] = '';
 		}
 		$this->load->model('article_model');
-		$data['articles'] = $this->article_model->get_articles_at(10,(($offset-1)*10),$status,$order,$search);
-		$data['total_articles'] = $this->article_model->get_total_articles($status,$search);
+		$data['articles'] = $this->article_model->get_articles_at(10,(($offset-1)*10),$status,$order,$search,$admin_acc);
+		$data['total_articles'] = $this->article_model->get_total_articles($status,$search,$admin_acc);
 		//scripts
 		$data['scripts'] = array(
 			base_url('scripts').'/system/articles/home_articles.js'
 		);
-		//cargar vistas de pagina principal de categorias
+		//cargar vistas de pagina principal de articulos
 		$this->load->view('system/common/header',$data);
 		$this->load->view('system/common/navbar');
 		$this->load->view('system/articles/articles');
@@ -82,8 +86,11 @@ class Articulos extends CI_Controller {
 		$data['active'] = 'articles';
 		$data['title'] = 'Publicar artículo';
 		$data['user'] = $this->user_name;
+		//obtiene un array con las categorias que puede publicar el usuario
+		$this->admin_model->adm_id = $this->user_session;
+		$admin_acc = $this->admin_model->get_admin_type();
 		$this->load->model('category_model');
-		$data['categories'] = $this->category_model->get_categories();
+		$data['categories'] = $this->category_model->get_categories_for_publish($admin_acc);
 		//stilos que se cargaran en la vista
 		$data['styles'] = array(
 			base_url('stylesheets').'/system/wysihtml5.css',
@@ -172,13 +179,22 @@ class Articulos extends CI_Controller {
 		//obtener los datos del articulo
 		$this->load->model('article_model');
 		$this->article_model->art_id = $article_id;
-		$data['article'] = $this->article_model->get_article();
+		$article = $this->article_model->get_article();
+		if($article == FALSE){
+			show_404();
+			return;
+		}
+		//envia los datos a la vista
 		$data['menu'] = $this->admin_model->get_menu_by_user();
 		$data['active'] = 'articles';
-		$data['title'] = 'Editar - '.$data['article']->art_titulo;
+		$data['title'] = 'Editar - '.$article->art_titulo;
 		$data['user'] = $this->user_name;
+		$data['article'] = $article;
+		//obtiene un array con las categorias que puede publicar el usuario
+		$this->admin_model->adm_id = $this->user_session;
+		$admin_acc = $this->admin_model->get_admin_type();
 		$this->load->model('category_model');
-		$data['categories'] = $this->category_model->get_categories();
+		$data['categories'] = $this->category_model->get_categories_for_publish($admin_acc);
 		//stilos que se cargaran en la vista
 		$data['styles'] = array(
 			base_url('stylesheets').'/system/wysihtml5.css',

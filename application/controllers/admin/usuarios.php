@@ -60,9 +60,13 @@ class Usuarios extends CI_Controller {
 		$data['active'] = 'users';
 		$data['title'] = 'Nuevo usuario';
 		$data['user'] = $this->user_name;
+		//carga las categorias del sistema
+		$this->load->model('category_model');
+		$data['categories'] = $this->category_model->get_categories();
 		//scripts que se cargaran en la vista
 		$data['scripts'] = array(
 			base_url('scripts').'/system/users/create_user.js',
+			base_url('scripts').'/system/users/access.js'
 		);
 		//cargar vista para nueva categoria
 		$this->load->view('system/common/header',$data);
@@ -116,6 +120,17 @@ class Usuarios extends CI_Controller {
 		$this->admin_model->adm_email = $this->input->post('adm_email');
 		$this->admin_model->adm_password = $this->input->post('adm_password');
 		$this->admin_model->adm_modulos = $this->input->post('modules');
+		$permisos = $this->input->post('art_cat_permiso');
+		if($permisos != NULL && $permisos != ''){
+			$adm_tipo = '';
+			foreach ($permisos as $permiso) {
+				$adm_tipo .= $permiso.',';
+			}
+			$adm_tipo = substr($adm_tipo,0,-1);
+			$this->admin_model->adm_tipo = $adm_tipo;
+		} else {
+			$this->admin_model->adm_tipo = NULL;
+		}
 		$this->response->succeed = $this->admin_model->create_user();
 		if($this->response->succeed == TRUE){
 			$this->response->code = 200; //ok
@@ -140,16 +155,27 @@ class Usuarios extends CI_Controller {
 			redirect('/admin');
 			return;
 		}
+		//carga los datos del usuario
+		$this->admin_model->adm_id = $user_id;
+		$user = $this->admin_model->get_user();
+		//si el usuario no exite envia un error 404
+		if($user == FALSE){
+			show_404();
+			return;
+		}
+		//datos que se enviaran a la vista
 		$data['menu'] = $this->admin_model->get_menu_by_user();
 		$data['active'] = 'users';
 		$data['user'] = $this->user_name;
-		//enviar datos de las categorias existentes
-		$this->admin_model->adm_id = $user_id;
-		$data['adm_user'] = $this->admin_model->get_user();
-		$data['title'] = 'Editar usuario '. $data['adm_user']->adm_nombre;
+		$data['title'] = 'Editar usuario '. $user->adm_nombre;
+		$data['adm_user'] = $user;
+		//carga las categorias del sistema
+		$this->load->model('category_model');
+		$data['categories'] = $this->category_model->get_categories();
 		//scripts que se cargaran en la vista
 		$data['scripts'] = array(
 			base_url('scripts').'/system/users/edit_user.js',
+			base_url('scripts').'/system/users/access.js',
 		);
 		//cargar vista para nueva categoria
 		$this->load->view('system/common/header',$data);
@@ -203,6 +229,21 @@ class Usuarios extends CI_Controller {
 		$this->admin_model->adm_nombre = $this->input->post('adm_nombre');
 		$this->admin_model->adm_email = $this->input->post('adm_email');
 		$this->admin_model->adm_modulos = $this->input->post('modules');
+		if($this->input->post('adm_tipo') == 'super'){
+			$this->admin_model->adm_tipo = 'super';
+		} else {
+			$permisos = $this->input->post('art_cat_permiso');
+			if($permisos != NULL && $permisos != ''){
+				$adm_tipo = '';
+				foreach ($permisos as $permiso) {
+					$adm_tipo .= $permiso.',';
+				}
+				$adm_tipo = substr($adm_tipo,0,-1);
+				$this->admin_model->adm_tipo = $adm_tipo;
+			} else {
+				$this->admin_model->adm_tipo = NULL;
+			}
+		}
 		$this->response->succeed = $this->admin_model->save_user();
 		if($this->response->succeed == TRUE){
 			$this->response->code = 200; //ok

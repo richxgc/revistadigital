@@ -8,6 +8,7 @@ class Admin_model extends CI_Model {
 	var $adm_nombre;
 	var $adm_email;
 	var $adm_password;
+	var $adm_tipo;
 	var $adm_modulos;
 
 	function login(){
@@ -42,6 +43,28 @@ class Admin_model extends CI_Model {
 		return $response;
 	}
 
+	function get_admin_type(){
+		if($this->adm_id == NULL){
+			return NULL;
+		}
+		$this->db->select('adm_tipo');
+		$this->db->where('adm_id',$this->adm_id);
+		$this->db->from($this->adm_table);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$adm_tipo = $query->row()->adm_tipo;
+			if($adm_tipo == 'super'){
+				return 'super';
+			} else if($adm_tipo != NULL){
+				return explode(',', $adm_tipo);	
+			} else{
+				return NULL;
+			}
+		} else {
+			return NULL;
+		}
+	}
+
 	function get_total_users(){
 		$this->db->select('adm_id');
 		$this->db->from($this->adm_table);
@@ -51,16 +74,19 @@ class Admin_model extends CI_Model {
 
 	function get_user(){
 		if($this->adm_id == NULL){
-			return array();
+			return FALSE;
 		}
 		$this->db->select('adm_id,adm_nombre,adm_email,adm_tipo');
 		$this->db->where('adm_id',$this->adm_id);
 		$this->db->from($this->adm_table);
-		$user = $this->db->get()->row();
-		if(sizeof($user) > 0){
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$user = $query->row();
 			$user->adm_modulos = $this->get_user_modules_array($user->adm_id);
+			return $user;
+		} else {
+			return FALSE;
 		}
-		return $user;
 	}
 
 	function get_users_at($limit,$offset){
@@ -202,9 +228,10 @@ class Admin_model extends CI_Model {
 		$this->db->set('adm_nombre',$this->adm_nombre);
 		$this->db->set('adm_email',$this->adm_email);
 		$this->db->set('adm_password',crypt($this->adm_password));
+		$this->db->set('adm_tipo',$this->adm_tipo);
 		$this->db->insert($this->adm_table);
 		$this->adm_id = $this->db->insert_id();
-		if($this->adm_modulos != NULL || $this->adm_modulos != ''){
+		if($this->adm_modulos != NULL && $this->adm_modulos != ''){
 			foreach($this->adm_modulos as $module){
 				//obtener el id del modulo que se desea dar de alta
 				$this->db->select('mad_id');
@@ -235,6 +262,7 @@ class Admin_model extends CI_Model {
 		$data = array(
 			'adm_nombre' => $this->adm_nombre,
 			'adm_email' => $this->adm_email,
+			'adm_tipo' => $this->adm_tipo,
 		);
 		$this->db->where('adm_id',$this->adm_id);
 		$this->db->update($this->adm_table,$data);

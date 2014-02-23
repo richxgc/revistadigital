@@ -45,6 +45,12 @@ class System_model extends CI_Model {
 		$this->db->set('mad_menu','Estadísticas');
 		$this->db->insert($this->mad_table);
 		$this->mad_id = $this->db->insert_id();
+		//datos del modulo de portadas
+		$this->db->set('mad_nombre','covers');
+		$this->db->set('mad_url','portadas');
+		$this->db->set('mad_menu','Portadas');
+		$this->db->insert($this->mad_table);
+		$this->mad_id = $this->db->insert_id();
 		//permisos de acceso al usuario de instalacion para el modulo de estadisticas
 		$this->db->set('adm_id',$this->adm_id);
 		$this->db->set('mad_id',$this->mad_id);
@@ -79,6 +85,10 @@ class System_model extends CI_Model {
 		$this->db->set('adm_id',$this->adm_id);
 		$this->db->set('mad_id',$this->mad_id);
 		$this->db->insert($this->aca_table);
+		//crear el cascaron para la portada principal
+		$this->db->set('por_nombre','Principal');
+		$this->db->set('por_tipo','principal');
+		$this->db->insert('portadas_revista');
 		//verificar el estado de la transaccion y notificar al controlador
 		if($this->db->trans_status() === FALSE){
 			//hacer rollback si la transaccion fallo

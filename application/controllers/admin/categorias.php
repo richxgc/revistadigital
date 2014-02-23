@@ -137,16 +137,21 @@ class Categorias extends CI_Controller {
 			redirect('/admin');
 			return;
 		}
+		//obtiene los datos de la categoria
+		$this->load->model('category_model');
+		$this->category_model->cat_id = $cat_id;
+		$category = $this->category_model->get_category();
+		if($category == FALSE){
+			show_404();
+			return;
+		}
 		//carga los datos que se enviaran a la vista
 		$data['menu'] = $this->admin_model->get_menu_by_user();
 		$data['active'] = 'categories';
 		$data['user'] = $this->user_name;
-		//enviar datos de las categorias existentes
-		$this->load->model('category_model');
+		$data['title'] = 'Editar categoria '. $category->cat_nombre;
+		$data['category'] = $category;
 		$data['categories'] = $this->category_model->get_categories();
-		$this->category_model->cat_id = $cat_id;
-		$data['category'] = $this->category_model->get_category();
-		$data['title'] = 'Editar categoria '. $data['category']->cat_nombre;
 		//stilos que se cargaran en la vista
 		$data['styles'] = array(
 			base_url('stylesheets').'/system/colorpicker.css',

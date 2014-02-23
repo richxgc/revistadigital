@@ -38,8 +38,12 @@
 |
 */
 //rutas por defecto para configuracion
-$route['default_controller'] = "home";
+$route['default_controller'] = "front/home";
 $route['404_override'] = '';
+
+/*-------------------RUTAS DEL FRONTEND--------------*/
+$route['articulo/(:any)'] = 'front/articles/index/$1';
+$route['categoria/(:any)'] = 'front/categories/index/$1';
 
 /*-------------------RUTAS DE LA ADMINISTRACION--------------*/
 
@@ -64,6 +68,10 @@ $route['admin/articulos/editar/(:num)'] = 'admin/articulos/edit_article/$1';
 $route['admin/categorias/(:num)'] = 'admin/categorias/index/$1';
 $route['admin/categorias/nueva'] = 'admin/categorias/new_category';
 $route['admin/categorias/editar/(:num)'] = 'admin/categorias/edit_category/$1';
+
+//rutas de portadas / administracion
+$route['admin/portadas/(:num)'] = 'admin/portadas/index/$1';
+$route['admin/portadas/editar/(:num)'] = 'admin/portadas/edit_cover/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

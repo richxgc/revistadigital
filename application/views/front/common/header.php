@@ -8,8 +8,14 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('stylesheets'); ?>/bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('stylesheets'); ?>/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('stylesheets'); ?>/front/revista.css"/>
+	<?php if(isset($meta_tags)): ?>
+	<?php foreach($meta_tags as $meta): ?>
+	<?php echo $meta; ?>
+	<?php endforeach; ?>
+	<?php endif; ?>
 </head>
 <body>
+<!--navbar-->
 <nav class="navbar navbar-inverse navbar-revista navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">

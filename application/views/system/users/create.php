@@ -32,27 +32,52 @@
 				</div>
 				<div class="form-group">
 					<label for="modules[]" class="block">Permisos</label>
-					<div class="checkbox col-lg-3">
+					<div class="checkbox col-lg-2">
 						<label>
 							<input type="checkbox" name="modules[]" value="stats"/> Ver Estadísticas
 						</label>
 					</div>
-					<div class="checkbox col-lg-3">
+					<div class="checkbox col-lg-2">
 						<label>
-							<input type="checkbox" name="modules[]" value="articles"/> Publicar Artículos
+							<input type="checkbox" name="modules[]" value="covers"/> Editar Portadas
 						</label>
 					</div>
-					<div class="checkbox col-lg-3">
+					<div class="checkbox col-lg-2">
+						<label>
+							<input type="checkbox" name="modules[]" value="articles" id="publish_articles"/> Publicar Artículos
+						</label>
+					</div>
+					<div class="checkbox col-lg-2">
 						<label>
 							<input type="checkbox" name="modules[]" value="categories"/> Modificar Categorias
 						</label>
 					</div>
-					<div class="checkbox col-lg-3">
+					<div class="checkbox col-lg-2">
 						<label>
 							<input type="checkbox" name="modules[]" value="users"/> Modificar Usuarios
 						</label>
 					</div>
-					<p class="help-block">Estos son los modulos a los que el usuario tendra acceso. Solo pueden ser modificados por alguien que tenga acceso al modulo de usuarios.</p>
+					<div class="row">
+						<div class="col-lg-12">
+							<p class="help-block">Estos son los modulos a los que el usuario tendra acceso. Solo pueden ser modificados por alguien que tenga acceso al modulo de usuarios.</p>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="permissions_articles" style="display:none;">
+					<label for="art_permisos_publicar">Permisos de publicación</label>
+					<div class="input-group">
+						<select class="form-control" id="art_permisos_publicar">
+							<option value="">Selecciona una categoría</option>
+							<?php foreach($categories as $category): ?>
+							<option value="<?php echo $category->cat_id; ?>"><?php echo $category->cat_nombre; ?></option>
+							<?php endforeach; ?>
+						</select>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default only-icon" id="add-cat-p" title="Agregar categoría"><i class="fa fa-plus-circle"></i></button>
+						</span>
+					</div>
+					<ul id="cat-p-list"></ul>
+					<p class="help-block">Seleccione una categoría de la lista superior y de clic en el botón "Agregar" para añadir permisos de publicar en esa categoría al usuario. Solo será efectivo si tiene permisos de publicar artículos.</p>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-success" id="btn-submit"><i class="fa fa-upload"></i> Crear usuario</button>

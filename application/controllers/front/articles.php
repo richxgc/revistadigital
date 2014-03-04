@@ -2,8 +2,15 @@
 
 class Articles extends CI_Controller {
 
+	var $response;
+	var $front_uid;
+	var $front_uem;
+
 	public function __construct(){
 		parent::__construct();
+		$this->response = new stdClass();
+		$this->front_uid = $this->session->userdata('front_uid');
+		$this->front_uem = $this->session->userdata('front_uem');
 	}
 
 	public function index($art_url){
@@ -39,6 +46,14 @@ class Articles extends CI_Controller {
 		//datos de la vista
 		$data['title'] = $article->art_titulo.' | Instituto Tecnológico de Morelia';
 		$data['active'] = $category->cat_id;
+		$data['front_uid'] = $this->front_uid;
+		$data['front_uem'] = $this->front_uem;
+		//si existe sesion de usuario carga algunos scripts
+		if($this->front_uid != FALSE){
+			$data['scripts'] = Array(
+				base_url('scripts').'/front/users/save_to_lib.js'
+			);
+		}
 		//establecer etiquetas meta
 		$authors = NULL;
 		foreach($article->art_autores as $author){

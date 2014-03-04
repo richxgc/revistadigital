@@ -7,6 +7,13 @@ if(!function_exists('get_year')){
 	}
 }
 
+if(!function_exists('mysql_date')){
+	function mysql_date(){
+		$date = gmt_to_local(now(),'UM6',TRUE);
+		return date('Y-m-d',$date);
+	}
+}
+
 if(!function_exists('get_simplified_date')){
 	function get_simplified_date($mysql_date){
 		//2014-02-07

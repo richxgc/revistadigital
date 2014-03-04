@@ -16,6 +16,11 @@ class Testing extends CI_Controller {
 
 	/************TESTING***********/
 
+	public function delete(){
+		//unlink('http://localhost/revista/users_uploads/curriculums/52bbaa9355abf98a2ed7b7f341578351.pdf');
+		$s = unlink('./users_uploads/curriculums/52bbaa9355abf98a2ed7b7f341578351.pdf');
+	}
+
 	//unit testing
 	public function insert_borrador(){
 

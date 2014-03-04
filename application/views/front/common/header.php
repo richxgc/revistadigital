@@ -15,6 +15,10 @@
 	<?php endif; ?>
 </head>
 <body>
+<!--alerts-->
+<div class="alert" id="alert-overlay">
+	<p id="alert-text"></p>
+</div>
 <!--navbar-->
 <nav class="navbar navbar-inverse navbar-revista navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -30,11 +34,21 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="http://itmorelia.edu.mx" target="_blank">ITMORELIA.EDU.MX</a></li>
 				<li class="dropdown">
+					<?php if($front_uid != FALSE): ?>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="text-transform:uppercase;"><?php echo $front_uem; ?> <i class="fa fa-bars"></i></a>
+					<ul class="dropdown-menu">
+						<li><a href="<?php echo base_url().index_page(); ?>/mi_cuenta"><i class="fa fa-user"></i> Mi cuenta</a></li>
+						<li><a href="<?php echo base_url().index_page(); ?>/marcadores"><i class="fa fa-bookmark"></i> Marcadores</a></li>
+						<li class="divider"></li>
+						<li><a href="<?php echo base_url().index_page(); ?>/logout"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
+					</ul>
+					<?php else: ?>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">CUENTA <i class="fa fa-bars"></i></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"><i class="fa fa-lock"></i> Iniciar sesión</a></li>
-						<li><a href="#"><i class="fa fa-user"></i> Registrarme</a></li>
+						<li><a href="<?php echo base_url().index_page().'/login'; ?>"><i class="fa fa-lock"></i> Iniciar sesión</a></li>
+						<li><a href="<?php echo base_url().index_page().'/registrar'; ?>"><i class="fa fa-sign-in"></i> Registrarme</a></li>
 					</ul>
+					<?php endif; ?>
 				</li>
 			</ul>
 		</div>

@@ -1,13 +1,17 @@
-<div class="col-lg-3 col-md-3 hidden-sm affix" id="navbar">
+<div class="col-lg-3 col-md-3 hidden-sm hidden-xs affix" id="navbar">
 	<div id="navbar-inner">
 		<div class="row" style="margin-top:20px;">
 			<div class="col-lg-12">
-				<form role="search" method="get" action="#" id="search-content">
+				<form role="search" method="get" action="<?php echo base_url().index_page(); ?>/buscar/" id="search-content">
 					<div class="input-group">
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 						</span>
-						<input type="text" class="form-control" name="search" placeholder="Buscar"/>
+						<?php if($this->input->get('s')): ?>
+						<input type="text" class="form-control" name="s" placeholder="Buscar" value="<?php echo $this->input->get('s'); ?>"/>							
+						<?php else: ?>
+						<input type="text" class="form-control" name="s" placeholder="Buscar"/>
+						<?php endif; ?>
 					</div>
 				</form>	
 			</div>
@@ -38,16 +42,12 @@
 		</div>
 		<div class="row" style="margin-bottom:30px;">
 			<div class="col-lg-12">
-				<p>
-					<a href="#">Acerca de</a> | 
-					<a href="#">Privacidad</a> | 
-					<a href="#">Feed RSS</a> |
-				</p>
-			</div>
-			<div class="col-lg-12">
 				<h4 class="help-block">Enlaces</h4>
-				<p><a href="http://itmorelia.edu.mx" target="_blank">Instituto Tecnológico de Morelia</a></p>
-				<p><a href="http://www.snit.mx/">DGEST</a></p>
+				<p>
+					<a href="<?php echo base_url().index_page(); ?>/acerca_de">Acerca de la Revista</a> | 
+					<a href="<?php echo base_url().index_page(); ?>/privacidad">Políticas de Privacidad</a> | 
+					<a href="http://itmorelia.edu.mx" target="_blank">Instituto Tecnológico de Morelia</a>
+				</p>
 				<h4 class="help-block">Redes Sociales</h4>
 				<p>
 					<a href="https://www.facebook.com/ITMoreliaOficial" target="_blank">Facebook</a> | 

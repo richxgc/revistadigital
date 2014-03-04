@@ -20,6 +20,28 @@ class Article_model extends CI_Model {
 
 	/*--------------FRONTEND FUNCTIONS--------------*/
 
+	function search($search){
+		if($search == NULL){
+			return NULL;
+		}
+		$this->db->select('articulos_revista.art_id,art_titulo,art_url,art_portada,art_abstracto,art_fecha,art_estado');
+		$this->db->like('art_contenido',$search);
+		$this->db->where('art_estado','publicado');
+		$this->db->order_by('art_fecha','DESC');
+		$this->db->from($this->art_table);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$articles = $query->result();
+			foreach ($articles as &$article){
+				$article->art_autores = $this->get_article_authors_array($article->art_id);
+				$article->art_categorias = $this->get_article_categories_array($article->art_id);
+			}
+			return $articles;
+		} else {
+			return NULL;
+		}
+	}
+
 	function get_popular_content($limit){
 		$this->db->select('art_titulo,art_url,art_portada,art_fecha');
 		$this->db->where('art_estado','publicado');

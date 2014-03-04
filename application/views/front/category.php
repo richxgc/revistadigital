@@ -1,13 +1,11 @@
-<div class="col-lg-9 col-md-9" id="main-content">
-	<?php if($cover != NULL): ?>
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3" id="main-content">
 	<div class="row" style="margin-top:20px;">
+		<?php if($cover != NULL): ?>
 		<?php $this->load->view('front/components/spectacular'); ?>
-	</div>
-	<?php else: ?>
-	<div class="row" style="margin-top:20px;">
+		<?php else: ?>
 		<div class="col-lg-12"><h1 style="margin:0px;"><?php echo $category->cat_nombre; ?></h1></div>
+		<?php endif; ?>
 	</div>
-	<?php endif; ?>
 	<div class="row" style="margin-top:10px; margin-bottom:10px;">
 		<div class="col-lg-12 section">
 			<div class="section-inner"><i class="fa fa-clock-o"></i><h2>Los artículos más recientes</h2></div>

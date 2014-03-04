@@ -42,8 +42,25 @@ $route['default_controller'] = "front/home";
 $route['404_override'] = '';
 
 /*-------------------RUTAS DEL FRONTEND--------------*/
+//rutas sobre la revista
+$route['acerca_de'] = 'front/home/about';
+$route['privacidad'] = 'front/home/privacy';
+//rutas de contenido
+$route['buscar'] = 'front/home/search';
 $route['articulo/(:any)'] = 'front/articles/index/$1';
 $route['categoria/(:any)'] = 'front/categories/index/$1';
+//rutas de usuarios
+$route['usuario/(:num)'] = 'front/users/index/$1';
+$route['mi_cuenta'] = 'front/users/account';
+$route['mi_cuenta/editar'] = 'front/users/edit_account';
+$route['mi_cuenta/editar_curriculum'] = 'front/users/edit_curriculum';
+$route['marcadores'] = 'front/users/bookmarks';
+$route['marcadores/(:num)'] = 'front/users/bookmarks/$1';
+//rutas de registro y de sesion
+$route['login'] = 'front/users/login';
+$route['logout'] = 'front/users/logout';
+$route['registrar'] = 'front/users/register';
+$route['activar/(:any)'] = 'front/users/activate_user/$1';
 
 /*-------------------RUTAS DE LA ADMINISTRACION--------------*/
 

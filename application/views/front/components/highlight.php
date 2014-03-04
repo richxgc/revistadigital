@@ -1,7 +1,7 @@
 <?php if(isset($cover->highlights)): ?>
 <?php foreach($cover->highlights as $spot): ?>
 <?php $category = $spot->art_categorias[sizeof($spot->art_categorias)-1]; ?>
-<div class="col-lg-4 col-md-4 home-spotlight">
+<div class="col-lg-4 col-md-4 col-sm-4 home-spotlight">
 	<header>
 		<img src="<?php echo $spot->art_portada; ?>" alt="<?php echo $spot->art_titulo; ?>" style="max-width:100%;"/>
 		<div>

@@ -1,6 +1,6 @@
 	</div></div>
 	<script type="text/javascript">
-		var path = "<?php echo base_url().index_page(); ?>";
+		var path = "<?php echo base_url().index_page().'/front'; ?>";
 	</script>
 	<script type="text/javascript" src="<?php echo base_url('libraries'); ?>/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url('libraries'); ?>/bootstrap.min.js"></script>

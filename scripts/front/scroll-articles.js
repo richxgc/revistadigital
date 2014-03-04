@@ -12,8 +12,8 @@ $(window).scroll(function(e) {
 function getMoreContent(){
 	var url_request = null;
 	var flags = true;
-	if(category == null){ url_request = path + '/front/articles/get_front_content/'+offset+'/';} 
-	else{url_request = path + '/front/articles/get_front_content/'+offset+'/'+category;}
+	if(category == null){ url_request = path + '/articles/get_front_content/'+offset+'/'; }
+	else{ url_request = path + '/articles/get_front_content/'+offset+'/'+category; }
 	$('#loading-content').fadeIn('fast').css('display', 'block');
 	$.ajax({
 		url: url_request,

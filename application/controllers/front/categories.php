@@ -2,8 +2,15 @@
 
 class Categories extends CI_Controller {
 
+	var $response;
+	var $front_uid;
+	var $front_uem;
+
 	public function __construct(){
 		parent::__construct();
+		$this->response = new stdClass();
+		$this->front_uid = $this->session->userdata('front_uid');
+		$this->front_uem = $this->session->userdata('front_uem');
 	}
 
 	public function index($cat_url){
@@ -39,9 +46,27 @@ class Categories extends CI_Controller {
 		//datos de la vista
 		$data['title'] = $category->cat_nombre.' | Instituto Tecnológico de Morelia';
 		$data['active'] = $category->cat_id;
+		$data['front_uid'] = $this->front_uid;
+		$data['front_uem'] = $this->front_uem;
 		//obtener los primeros 10 articulos en la lista
 		$this->load->model('article_model');
 		$data['articles'] = $this->article_model->get_front_content(10,0,$category->cat_id);
+		//establecer etiquetas meta
+		$data['meta_tags'] = Array(
+			'<link rel="canonical" href="'.get_category_url($category->cat_url).'">',
+			'<meta name="description" content="'.$category->cat_nombre.' | Instituto Tecnológico de Morelia" />',
+			'<meta name="keywords" content="Instituto Tecnológico de Morelia,ITM,Revista Electrónica,Difusión Científica,México,Michoacán,Morelia,Ciencia,Tecnología,Investigación"/>',
+			'<meta name="copyright" content="© '.get_year(mysql_date()).' Instituto Tecnológico de Morelia"/>',
+			//facebook opengraph tags
+			'<meta property="fb:app_id" content="660426037349263"/>',
+			'<meta property="og:title" content="'.$category->cat_nombre.' | Instituto Tecnológico de Morelia"/>',
+			'<meta property="og:site_name" content="Revista del Instituto Tecnológico de Morelia"/>',
+			'<meta property="og:url" content="'.get_category_url($category->cat_url).'"/>',
+			'<meta property="og:description" content="'.$category->cat_nombre.' | Instituto Tecnológico de Morelia"/>',
+			'<meta property="og:image" content="'.base_url('images').'/logo_original.png"/>',
+			'<meta property="og:type" content="website"/>',
+			'<meta property="og:locale" content="es_LA"/>',
+		);
 		//cargar scripts
 		$data['scripts'] = Array(
 			base_url('scripts').'/front/scroll-articles.js',

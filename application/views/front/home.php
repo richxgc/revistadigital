@@ -1,10 +1,10 @@
-<div class="col-lg-9 col-md-9" id="main-content">
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3" id="main-content">
 	<div class="row" style="margin-top:20px;">
-		<div class="col-lg-3 col-md-3">
-			<?php $this->load->view('front/components/popular'); ?>
-		</div>
-		<div class="col-lg-9 col-md-9">
+		<div class="col-lg-9 col-md-9 hidden-xs">
 			<?php $this->load->view('front/components/carousel'); ?>
+		</div>
+		<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+			<?php $this->load->view('front/components/popular'); ?>
 		</div>
 	</div>
 	<div class="row" style="margin-top:20px;">

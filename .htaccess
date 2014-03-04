@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|fonts|images|libraries|scripts|stylesheets|uploads|users_uploads|license.txt|robots\.txt)
+RewriteRule ^(.*)$ /index.php?$1 [L]
+Options -Indexes

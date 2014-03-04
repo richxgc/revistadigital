@@ -1,5 +1,9 @@
+/**reglas generales**/
 body{
 	background-color: #f3f3f3;
+}
+.justify{
+	text-align: justify;
 }
 .navbar-revista {
 	height: 40px !important;
@@ -7,14 +11,31 @@ body{
 	background-color: #4b4b4b !important;
 }
 .navbar-revista .navbar-brand {
+	margin-left: 0px !important;
 	padding: 5px 0px;
 	font-size: 16px;
 	line-height: 30px;
 	color: #ccc;
 }
+.navbar-toggle{
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
 .navbar-revista .navbar-nav > li > a {
 	padding: 10px 15px;
 	color: #ccc;
+}
+#alert-overlay {
+	display: none;
+	position: fixed;
+	z-index: 1050;
+	width: 30%;
+	top: 60px;
+	right: 5%;
+}
+#loading-img{
+	display: none;
+	margin-left: 20px;
 }
 #content {
 	padding-top: 40px;
@@ -33,7 +54,7 @@ body{
 	line-height: 35px;
 	font-size: 13px;
 	text-transform: uppercase;
-	background-color: #f5f5f5;
+	background-color: #e9e9e9;
 	border-bottom: 1px solid #e4e4e4;
 }
 .category-menu > li > a {
@@ -132,8 +153,29 @@ ul.submenu > li > a:hover{
 .widget-share > ul > li{
 	margin: 5px 0;
 }
+.widget-save-library > .help-block{
+	font-size: 10px;
+	text-align: justify;
+}
+.home-spotlight{
+	min-height: 330px;
+	max-height: 350px;
+}
+.home-spotlight > header > .remove-bookmark{
+	display: block;
+	position: absolute;
+	font-size: 45px;
+	vertical-align: top;
+	line-height: 0px;
+	color: rgba(184, 1, 1, 0.78);
+	top: -5px;
+}
+.home-spotlight > header > .remove-bookmark:hover{
+	color: rgba(207, 4, 4, 1);
+	top: -3px;
+}
 .home-spotlight > header > img{
-	max-height: 175px;
+	height: 175px;
 	width: 100%;
 }
 .home-spotlight > header > div {
@@ -173,37 +215,8 @@ ul.submenu > li > a:hover{
 	font-size: 12px;
 	line-height: 12px;
 }
-@media (min-width: 1300px){
-	#navbar{
-		right: 3%;
-	}
-	#navbar-inner{
-		padding-right: 10px;
-	}
-}
-@media (min-width: 1200px) and (max-width: 1299px){
-	#navbar{
-		right: 1%;
-	}
-	#navbar-inner{
-		padding-right: 10px;
-	}
-}
-@media (min-width: 1100px) and (max-width: 1199px){
-	#navbar{
-		right: 3%;
-	}
-	#navbar-inner{
-		padding-right: 10px;
-	}
-}
-@media (min-width: 992px) and (max-width: 1099px){
-	#navbar{
-		right: 1%;
-	}
-	#navbar-inner{
-		padding-right: 10px;
-	}
+#navbar-inner{
+	padding-right: 10px;
 }
 div.section{
 	height: 40px;
@@ -379,4 +392,101 @@ div.section-inner > h1, div.section-inner > h2{
 .btn-rmore:hover{
 	color: #fff;
 	background-color: #555;
+}
+/****ACCOUNT****/
+.account-card{
+	display: inline-block;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+	box-sizing: border-box;
+	padding: 5px 10px;
+}
+.account-basic > .account-image{
+	display: inline-block;
+	width: 35%;
+	max-height: auto;
+	margin-right: 2%;
+}
+.account-basic > .account-content{
+	display: inline-block;
+	width: 60%;
+	vertical-align: top;
+}
+.account-basic > .account-content > h2{
+	margin: 0;
+	font-size: 20px;
+}
+.account-basic > .account-content > h3{
+	margin: 10px 0;
+	font-size: 15px;
+	color: #ccc;
+}
+.account-curriculum > h2{
+	margin: 0;
+}
+.account-articles > h2{
+	margin: 0;
+}
+.account-articles > ul{
+	list-style: none;
+	padding: 0;
+}
+.account-articles > ul > li {
+	padding: 5px 0;
+	margin: 6px 0;
+	border-top: 1px solid #e6e6e6;
+}
+.account-articles > ul > li > img {
+	width: 30%;
+	height: auto;
+	display: inline-block;
+	vertical-align: top;
+}
+.account-articles  > ul > li > div {
+	display: inline-block;
+	width: 65%;
+	margin-left: 3%;
+	font-size: 14px;
+}
+.account-articles  > ul > li > div > p {
+	margin: 0;
+}
+/**diseño responsivo**/
+@media (max-width: 400px){
+	.navbar-revista .navbar-brand{
+		font-size: 10px;
+	}
+	div.section-inner > h1, div.section-inner > h2{
+		font-size: 17px;
+		line-height: 25px;
+	}
+	div.section-inner > i{
+		font-size: 18px;
+	}
+}
+@media (max-width: 767px){
+	.navbar-collapse{
+		background-color: #4b4b4b;
+	}
+	.article-ls > .inner > .image-article{
+		display: none;
+	}
+	.article-ls > .inner > .content-article{
+		width: 100%;
+	}
+	.left-spectacular {
+		width: 100% !important;
+		padding-right: 10px;
+		margin-bottom: 10px;
+	}
+}
+@media (max-width: 1000px){
+	#content,#user-content {
+		padding-top: 20px;
+	}
+	#home-carousel, .spectacular{
+		margin-top: 10px;
+	}
 }

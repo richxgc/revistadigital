@@ -31,7 +31,7 @@ function searchAuthor(search_string){
 					for(var i=0; i< authors.length; i++){
 						var author = '';
 						if(authors[i].usr_imagen != ''){
-							//TODO: mostrar lista con imagen del usuario
+							author = '<li class="list-group-item"><a href="#" class="add-author" id="aut-'+authors[i].usr_id+'"><img src="'+authors[i].usr_imagen+'" width="20" height="20" style="margin-right:5px;"/>'+authors[i].usr_nombre+'</a></li>';
 						} else{
 							author = '<li class="list-group-item"><a href="#" class="add-author" id="aut-'+authors[i].usr_id+'"><img src="'+base_domain+'images/profile_thumbnail.jpg" width="20" height="20" style="margin-right:5px;"/>'+authors[i].usr_nombre+'</a></li>';
 						}

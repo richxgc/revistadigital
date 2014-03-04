@@ -2,7 +2,7 @@
 
 if(!function_exists('get_user_url')){
 	function get_user_url($user_id){
-		return base_url().index_page().'/u/'.$user_id;
+		return base_url().index_page().'/usuario/'.$user_id;
 	}
 }
 

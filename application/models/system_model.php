@@ -45,6 +45,10 @@ class System_model extends CI_Model {
 		$this->db->set('mad_menu','Estadísticas');
 		$this->db->insert($this->mad_table);
 		$this->mad_id = $this->db->insert_id();
+		//permisos de acceso al usuario de instalacion para el modulo de estadisticas
+		$this->db->set('adm_id',$this->adm_id);
+		$this->db->set('mad_id',$this->mad_id);
+		$this->db->insert($this->aca_table);
 		//datos del modulo de portadas
 		$this->db->set('mad_nombre','covers');
 		$this->db->set('mad_url','portadas');

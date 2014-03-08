@@ -70,6 +70,10 @@ $route['admin/login'] = 'admin/inicio/login';
 $route['admin/logout'] = 'admin/inicio/logout';
 $route['admin/login_now'] = 'admin/inicio/login_now';
 
+//rutas de estadisticas /administracion
+$route['admin/estadisticas/articulos'] = 'admin/estadisticas/stats_articles';
+$route['admin/estadisticas/usuarios'] = 'admin/estadisticas/stats_users';
+
 //rutas de usuarios / administracion
 $route['admin/usuarios/(:num)'] = 'admin/usuarios/index/$1';
 $route['admin/usuarios/nuevo'] = 'admin/usuarios/new_user';

@@ -18,9 +18,8 @@ function usersStats(){
 		async: false,
 		success: function(response){
 			data = google.visualization.arrayToDataTable([
-				['Usuarios','Cantidad',{role: 'style'}],
-				['Sesiones', response.sessions, '#2B5ABE'],
-				['Registros', response.users, '#83E20A']
+				['Usuarios','Sesiones','Registros'],
+				['Usuarios', response.sessions,response.users],
 			]);
 		}, 
 		error: function(){
@@ -31,12 +30,12 @@ function usersStats(){
 			]);
 		}
 	});
-	
 	var options = {
 		'title': 'Sesiones y Registros', 
 		'titleTextStyle': {color:'#333',fontSize:15},
 		'width': width, 'height': 300,
-		chartArea:{left:20,top:40,width:"70%",height:"75%"}
+		chartArea:{left:20,top:40,width:"70%",height:"75%"},
+		bar: {groupWidth: "40%"},
 	};
 	var chart = new google.visualization.ColumnChart(document.getElementById('chart-users'));
 	chart.draw(data, options);
@@ -53,10 +52,10 @@ function curriculumStats(){
 		dataType: 'json',
 		async: false,
 		success: function(response){
-			data.addRows([['Si tienen',response.yes],['No tienen',response.no]]);
+			data.addRows([['Tienen curriculum',response.yes],['No tienen curriculum',response.no]]);
 		},
 		error: function(){
-			data.addRows([['Si tienen',0],['No tienen',0]]);
+			data.addRows([['Tienen curriculum',0],['No tienen curriculum',0]]);
 		}
 	});
 	var options = {
@@ -64,10 +63,7 @@ function curriculumStats(){
 		'titleTextStyle': {color:'#333',fontSize:15},
 		'width': width, 'height': 270,
 		chartArea:{left:15,top:40,width:"90%",height:"80%"},
-		slices: {
-            0: { color: '#83E20A' },
-            1: { color: '#EC1313' }
-        }
+		pieHole: 0.4,
 	};
 	var chart = new google.visualization.PieChart(document.getElementById('chart-curriculums'));
 	chart.draw(data, options);

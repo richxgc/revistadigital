@@ -1,5 +1,35 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if(!function_exists('get_month_dates')){
+	function get_month_dates($mt=0){
+		$date =  gmt_to_local(now(),'UM6',TRUE);
+		$date = date('Y-m-d',$date);
+		$month = intval(substr($date,5,2)) + ($mt);
+		$year = intval(substr($date,0,4));
+		$output = array();
+		switch ($month) {
+			case 0:
+				$month = 12;
+				break;
+			case -1:
+				$month = 11;
+				break;
+			default:
+				$month = $month;
+				break;
+		}
+		if($month > intval(substr($date,5,2))){ $year--; }
+		if(in_array($month, array(1,2,3,4,5,6,7,8,9))){
+			$output[] = $year.'-0'.$month.'-01';
+			$output[] = $year.'-0'.$month.'-31';
+		} else {
+			$output[] = $year.'-'.$month.'-01';
+			$output[] = $year.'-'.$month.'-31';
+		}
+		return $output;
+	}
+}
+
 if(!function_exists('get_year')){
 	function get_year($mysql_date){
 		//2014-02-07

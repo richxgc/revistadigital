@@ -13,8 +13,43 @@ class Testing extends CI_Controller {
 		$this->response = new stdClass();
 	}
 
+	public function months(){
+		var_dump(get_month_dates(-2));
+	}
 
 	/************TESTING***********/
+
+	public function enviar_correo(){
+		$message = "mensaje de prueba";
+
+		$this->load->library('email');
+
+		/*
+		$config['smtp_host'] = '';
+		$config['smtp_user'] = '';
+		$config['smtp_pass'] = '';
+		*/
+
+		//set email server config 
+		$config['protocol'] = 'smtp';
+		$config['mailpath'] = '/usr/sbin/sendmail';
+		$config['smtp_host'] = 'localhost';
+		$config['smtp_user'] = '';
+		$config['smtp_pass'] = '';
+		$config['charset']  = 'utf-8';
+		$config['newline']  = "\r\n";
+		//initialize library
+		$this->email->initialize($config);
+
+		$this->email->from('trujillo@itmorelia.edu.mx', 'Mensaje de Prueba');
+		$this->email->to('trujillo@itmorelia.edu.mx'); 
+
+		$this->email->subject('Mensaje de Prueba');
+		$this->email->message($message);	
+
+		$this->email->send();
+		echo $this->email->print_debugger();
+	}
 
 	public function delete(){
 		//unlink('http://localhost/revista/users_uploads/curriculums/52bbaa9355abf98a2ed7b7f341578351.pdf');

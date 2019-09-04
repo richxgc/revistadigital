@@ -1,0 +1,25 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.17.3-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ../code:/code
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+  php:
+    image: futurecorptm/php-fpm:5.6
+    volumes:
+      - ../code:/code
+  mysql:
+    image: mysql:5.5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: "6GSNy1RfKWcp0iu"
+      MYSQL_USER: "docker"
+      MYSQL_PASSWORD: "3gF2y0k57jjJ7Wr"
+      MYSQL_DATABASE: "dckr_revista"
+    volumes:
+      - ../database:/var/lib/mysql

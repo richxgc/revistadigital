@@ -41,3 +41,6 @@ dwsync.xml
 .svn
 .CVS
 .idea
+
+# Docker ignores
+database/*

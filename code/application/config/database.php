@@ -48,11 +48,11 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'revista';
-$db['default']['password'] = 'revista';
-$db['default']['database'] = 'revista';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['hostname'] = 'mysql';
+$db['default']['username'] = 'docker';
+$db['default']['password'] = '3gF2y0k57jjJ7Wr';
+$db['default']['database'] = 'dckr_revista';
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = TRUE;

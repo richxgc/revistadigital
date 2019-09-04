@@ -39,7 +39,7 @@ class Category_model extends CI_Model {
 	function get_main_categories(){
 		$this->db->select('*');
 		$this->db->where('cat_super_id',NULL);
-		$this->db->order_by('cat_id','ASC');
+		$this->db->order_by('cat_id','DESC');
 		$this->db->from($this->cat_table);
 		$query = $this->db->get();
 		return $query->result();

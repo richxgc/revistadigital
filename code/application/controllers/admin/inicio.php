@@ -16,8 +16,7 @@ class Inicio extends CI_Controller {
 	public function index(){
 		//si no existe sesion de usuario redirige a iniciar sesion
 		if($this->user_session == FALSE){
-			redirect('/admin/login');
-			return;
+			return redirect('/admin/login');
 		}
 		$this->load->model('admin_model');
 		$this->admin_model->adm_id = $this->user_session;
@@ -29,6 +28,7 @@ class Inicio extends CI_Controller {
 		//carga las vistas
 		$this->load->view('system/common/header',$data);
 		$this->load->view('system/common/navbar');
+		$this->load->view('system/welcome');
 		$this->load->view('system/common/footer');
 	}
 

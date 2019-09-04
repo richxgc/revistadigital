@@ -88,7 +88,7 @@ class Testing extends CI_Controller {
 		for($i=0; $i<30; $i++){
 			$this->db->set('adm_nombre','usuario-'.$i);
 			$this->db->set('adm_email','usuario.'.$i.'@mail.com');
-			$this->db->set('adm_password',crypt('12345'));
+			$this->db->set('adm_password',crypt('12345', 'do'));
 			$this->db->insert('usuarios_administracion');
 		}
 	}

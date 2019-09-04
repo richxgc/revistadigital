@@ -174,7 +174,7 @@ class User_model extends CI_Model {
 			'usr_nombre' => $this->usr_nombre
 		);
 		if($this->usr_password != NULL){
-			$data['usr_password'] = crypt($this->usr_password);
+			$data['usr_password'] = crypt($this->usr_password, 'do');
 		}
 		if($this->usr_imagen != NULL){
 			$data['usr_imagen'] = $this->usr_imagen;
@@ -302,9 +302,9 @@ class User_model extends CI_Model {
 		}
 		$this->db->set('usr_nombre',$this->usr_nombre);
 		$this->db->set('usr_email',$this->usr_email);
-		$this->db->set('usr_password',crypt($this->usr_password));
+		$this->db->set('usr_password',crypt($this->usr_password, 'do'));
 		$this->db->set('usr_activo',0);
-		$activation_code = urlencode(crypt($this->usr_nombre.$this->usr_email));
+		$activation_code = urlencode(crypt($this->usr_nombre.$this->usr_email, 'do'));
 		$this->db->set('usr_codigo',$activation_code);
 		$this->db->insert($this->usr_table);
 		if($this->db->affected_rows() > 0){

@@ -207,7 +207,7 @@ class Admin_model extends CI_Model {
 			$data = array(
 				'adm_nombre' => $this->adm_nombre,
 				'adm_email' => $this->adm_email,
-				'adm_password' => crypt($this->adm_password),
+				'adm_password' => crypt($this->adm_password, 'do'),
 			);
 		}
 		$this->db->where('adm_id',$this->adm_id);
@@ -227,7 +227,7 @@ class Admin_model extends CI_Model {
 		$this->db->trans_begin();
 		$this->db->set('adm_nombre',$this->adm_nombre);
 		$this->db->set('adm_email',$this->adm_email);
-		$this->db->set('adm_password',crypt($this->adm_password));
+		$this->db->set('adm_password',crypt($this->adm_password, 'do'));
 		$this->db->set('adm_tipo',$this->adm_tipo);
 		$this->db->insert($this->adm_table);
 		$this->adm_id = $this->db->insert_id();

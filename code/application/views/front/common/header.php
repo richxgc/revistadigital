@@ -28,11 +28,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="<?php echo base_url(); ?>" class="navbar-brand"><img src="<?php echo base_url('images'); ?>/logo_30x30.png" width="30px" height="30px" alt="ITM"/> Instituto Tecnológico de Morelia // Revista</a>
+			<a href="<?php echo base_url(); ?>" class="navbar-brand"><!-- <img src="<?php echo base_url('images'); ?>/logo_30x30.png" width="30px" height="30px" alt="ITM"/>  -->Revista Electrónica</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-top">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="http://itmorelia.edu.mx" target="_blank">ITMORELIA.EDU.MX</a></li>
 				<li class="dropdown">
 					<?php if($front_uid != FALSE): ?>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="text-transform:uppercase;"><?php echo $front_uem; ?> <i class="fa fa-bars"></i></a>

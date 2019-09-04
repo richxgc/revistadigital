@@ -25,7 +25,7 @@ class Home extends CI_Controller {
 		$data['popular'] = $this->article_model->get_popular_content(6);
 		//obtener los primeros 5 articulos en la lista
 		$data['articles'] = $this->article_model->get_front_content(5,0,FALSE);
-		$data['title'] = 'Revista del Instituto Tecnológico de Morelia';
+		$data['title'] = 'Revista Electrónica';
 		$data['active'] = 'home';
 		$data['front_uid'] = $this->front_uid;
 		$data['front_uem'] = $this->front_uem;
@@ -60,7 +60,7 @@ class Home extends CI_Controller {
 		$this->load->model('category_model');
 		$data['categories'] = $this->category_model->get_main_categories();
 		//datos que se envian a la vista
-		$data['title'] = 'Revista del Instituto Tecnológico de Morelia';
+		$data['title'] = 'Revista Electrónica';
 		$data['active'] = 'home';
 		$data['front_uid'] = $this->front_uid;
 		$data['front_uem'] = $this->front_uem;
@@ -85,7 +85,7 @@ class Home extends CI_Controller {
 		$this->load->model('category_model');
 		$data['categories'] = $this->category_model->get_main_categories();
 		//datos que se envian a la vista
-		$data['title'] = 'Revista del Instituto Tecnológico de Morelia';
+		$data['title'] = 'Revista Electrónica';
 		$data['active'] = 'home';
 		$data['front_uid'] = $this->front_uid;
 		$data['front_uem'] = $this->front_uem;
@@ -101,7 +101,7 @@ class Home extends CI_Controller {
 		$this->load->model('category_model');
 		$data['categories'] = $this->category_model->get_main_categories();
 		//datos que se envian a la vista
-		$data['title'] = 'Revista del Instituto Tecnológico de Morelia';
+		$data['title'] = 'Revista Electrónica';
 		$data['active'] = 'home';
 		$data['front_uid'] = $this->front_uid;
 		$data['front_uem'] = $this->front_uem;

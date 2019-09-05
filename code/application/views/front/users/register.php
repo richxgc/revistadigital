@@ -32,7 +32,7 @@
 				</div>
 				<div class="form-group">	
 					<label for="usr_email">Correo electrónico</label>
-					<input type="text" class="form-control" name="usr_email" id="usr_email" placeholder="Tu correo electrónico del ITM" pattern="[\w\-\.]{1,}@((itmorelia.edu.mx)|(tecmor.mx))$" required/>
+					<input type="text" class="form-control" name="usr_email" id="usr_email" placeholder="Tu correo electrónico" required/>
 					<p class="help-block">Necesitas contar con un correo electrónico del ITM, por ejemplo: "micorreo@itmorelia.edu.mx" o bien "micorreo@tecmor.mx", si aún no cuentas con él solicitalo en el centro de cómputo.</p>
 				</div>
 				<div class="form-group">

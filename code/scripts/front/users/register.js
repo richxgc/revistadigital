@@ -10,10 +10,10 @@ $(document).on('submit','#form-register-user',function(e){
 		call_alert('alert-danger','El nombre no es correcto.',function(){});
 		return;
 	}
-	if(!email.match(checkmail)){
-		call_alert('alert-danger','El correo electrónico no es correcto.',function(){});
-		return;
-	}
+	// if(!email.match(checkmail)){
+	// 	call_alert('alert-danger','El correo electrónico no es correcto.',function(){});
+	// 	return;
+	// }
 	if(pass1 != pass2 || pass1.length < 5){
 		call_alert('alert-danger','Las contraseñas no coinciden o no son correctas.',function(){});
 		return;
